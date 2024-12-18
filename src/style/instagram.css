@@ -1,0 +1,91 @@
+.instagram-container {
+    max-width: 540px;
+    margin: 0 auto;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    background: #fff;
+    padding: 16px;
+}
+
+.instagram-profile {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.instagram-profile img {
+    border-radius: 50%;
+    width: 88px;
+    height: 88px;
+    margin-right: 14px;
+}
+
+.instagram-profile div {
+    display: flex;
+    flex-direction: column;
+}
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+}
+
+.instagram-grid img {
+    width: 100%;
+    height: auto;
+    border-radius: 3px;
+    aspect-ratio: 1/1;
+}
+
+.gray {
+    color: gray;
+    font: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.mini {
+    font-size: smaller;
+    font-weight: bold;
+}
+
+.instagram-container button {
+    width: 100%;
+    border-radius: 15px;
+}
+
+.insta-logo {
+    top: 15px;
+    right: 15px;
+    position: absolute;
+}
+
+.fold-me {
+    top: 95px;
+    right: 16px;
+    position: absolute;
+    color: gray;
+}
+
+.fold-me .up {
+    display: none;
+}
+
+.instagram-container {
+    position: relative;
+    min-width: 330px;
+}
+
+@media screen and (min-width: 768px) {
+    .instagram-container {
+        width: 100%;
+        max-width: 1400px;
+    }
+
+    .instagram-container .fold-me {
+        display: none;
+    }
+
+    .instagram-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}

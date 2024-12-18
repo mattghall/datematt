@@ -28,7 +28,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'src/js/service-worker.js', to: path.resolve(__dirname, 'dist/js/service-worker.js') }
+        { from: 'src/js/service-worker.js', to: path.resolve(__dirname, 'dist/js/service-worker.js') },
+        { from: 'src/js/movies.js', to: path.resolve(__dirname, 'dist/js/movies.js') }
       ]
     })
   ],

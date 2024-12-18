@@ -1,0 +1,51 @@
+#movie-grid {
+    max-height: 322px;
+    overflow-y: auto;
+    margin-top: 5px;
+}
+
+.movie-poster {
+    position: relative;
+}
+
+.movie-poster .overlay {
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.movie-poster:hover .overlay {
+    opacity: 1;
+}
+
+.letterboxd-container {
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    background: #fff;
+    padding: 16px;
+    position: relative;
+}
+
+.letterboxd-logo a img {
+    width: 50%;
+    padding-bottom: 5px;
+}
+
+#load-more {
+    cursor: pointer;
+    color: grey;
+}
+
+#load-more:hover {
+    color: rgb(238, 42, 123);
+    --contrast-color: #ffdcff;
+}
+
+@media screen and (min-width: 768px) {
+    #movie-grid {
+        max-height: 470px;
+    }
+
+    .letterboxd-container {
+        height: 540px;
+    }
+}

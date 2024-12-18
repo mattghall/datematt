@@ -1,3 +1,38 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    background-color: #f8f9fa;
+}
+
+header {
+    background: linear-gradient(45deg, rgb(111 164 203) 15%, rgb(16 108 175) 75%)
+}
+
+.iframe-col-12 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab input[type=range] {
+    width: 100%;
+}
+
+.qualifications>div {
+    margin-bottom: 20px;
+}
+
+#duo-link img {
+    color: #58CC02;
+    height: 18px
+}
+
 /* Footer styling */
 #footer-row {
     background-color: #333;
@@ -46,4 +81,90 @@ body {
 .social-icons a {
     margin: 0 10px;
     color: white;
+}
+
+.col-md-6 {
+    margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .col-12 {
+        margin-bottom: .5rem !important;
+    }
+
+    .highlight-card p {
+        font-size: small;
+    }
+
+    #duo-link img {
+        height: 15px;
+    }
+
+    .blockquote-footer {
+        padding: 20px 0;
+        font-size: medium;
+    }
+}
+
+/* Quiz */
+#quiz {
+    text-align: center;
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab {
+    display: none;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+/* Input Sliders */
+/*Chrome*/
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    input[type='range'] {
+        overflow: hidden;
+        width: 100px;
+        -webkit-appearance: none;
+        background-color: #bb51c5;
+        background: linear-gradient(to right, #9c0000 0%, #4b78ca 50%, #00ac09 100%);
+    }
+
+    input[type='range'].politics {
+        background: linear-gradient(to right, #006eff 10%, #ff0000 90%);
+    }
+
+    input[type='range'].spiritual {
+        background: linear-gradient(to right, #000 10%, #fff 90%);
+    }
+
+    input[type='range']::-webkit-slider-thumb {
+        width: 20px;
+        -webkit-appearance: none;
+        height: 20px;
+        cursor: ew-resize;
+        background: #aed4ff;
+    }
+
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+    background-color: #43e5f7;
+}
+
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+    background-color: #43e5f7;
 }

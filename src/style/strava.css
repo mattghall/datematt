@@ -1,0 +1,77 @@
+.strava-card {
+    display: flex;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+    font-size: x-small;
+}
+
+.strava-card:hover {
+    transform: translateY(-5px);
+}
+
+.strava-card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.strava-card-img-left {
+    width: 40%;
+    height: auto;
+    object-fit: cover;
+}
+
+.strava-card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.strava-card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5em;
+}
+
+.map-thumb {
+    height: 54px;
+    width: 54px;
+    float: left;
+    margin-right: 10px;
+}
+
+.map-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-right: 1px solid #ddd;
+}
+
+.activity-stats {
+    line-height: 1em;
+    white-space: nowrap;
+}
+
+.activity-stats li {
+    line-height: 1em;
+    display: inline-block;
+    margin: 0 1em 0 0;
+    padding: 0;
+    height: auto;
+    border: none;
+}
+
+.strava-activities>li {
+    position: relative;
+    display: block;
+    clear: both;
+    list-style: none;
+    min-height: 62px;
+    border-bottom: 1px solid #f0f0f5;
+    padding-bottom: 7px;
+    margin-bottom: 7px;
+    line-height: 1.3em;
+    cursor: pointer;
+}
