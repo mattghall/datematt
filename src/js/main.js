@@ -23,5 +23,9 @@ $(function () {
         });
     }
 
+    setTimeout(function() {
+        feather.replace();
+    }, 1500);
+
 
 });
