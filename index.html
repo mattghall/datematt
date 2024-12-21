@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="dist/style/main.css">
     <script src="dist/js/main.bundle.js"></script>
+    <script src="dist/js/quiz.js"></script>
     <script src="dist/js/movies.js"></script>
 
     <script>
@@ -48,7 +49,7 @@
                     // $("#tab1").hide();
                     // $("#tab2").show();
                     $("#quiz").hide();
-                    $("#content").show();
+                    // $("#content").show();
                 }
             });
             $(".close-quiz").click(function () {
@@ -57,7 +58,8 @@
                     window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran";
                 } else {
                     $("#quiz").hide();
-                    $("#content").show();
+                    // $("#content").show();
+                    $("html").css("overflow", "auto");
                 }
 
             });
@@ -93,71 +95,7 @@
             }
         }
 
-        function sliderChange(slider, val) {
-            if (slider == "indoorOutdoorSlider") {
-                if (val > 60) {
-                    $("#outdoorsMsg").text("I love the Outdoors");
-                } else if (val > 20) {
-                    $("#outdoorsMsg").text("I like the Outdoors");
-                }
-                else if (val > -20) {
-                    $("#outdoorsMsg").text("I tolerate the Outdoors");
-                }
-                else if (val > -60) {
-                    $("#outdoorsMsg").text("I don't love the Outdoors");
-                } else {
-                    $("#outdoorsMsg").text("I'd like to stay inside, thanks'");
-                }
-            } else if (slider == "sportsSlider") {
-                if (val > 85) {
-                    $("#sportsMsg").text("I'm a sports fanatic");
-                } if (val > 60) {
-                    $("#sportsMsg").text("I love watching sports");
-                } else if (val > 20) {
-                    $("#sportsMsg").text("I like watching sports");
-                } else if (val > -20) {
-                    $("#sportsMsg").text("I tolerate watching sports");
-                } else if (val > -60) {
-                    $("#sportsMsg").text("I don't prefer watching sports");
-                } else {
-                    $("#sportsMsg").text("I hate sports ball");
-                }
-            } else if (slider == "spiritualSlider") {
-                if (val > 75) {
-                    $("#spititualMsg").text("Religon is a very big part of my life");
-                } else if (val > 20) {
-                    $("#spititualMsg").text("I consider myself religous");
-                } else if (val > -20) {
-                    $("#spititualMsg").text("I consider myself spiritual");
-                } else if (val > -50) {
-                    $("#spititualMsg").text("I'm not very religous");
-                } else if (val > -70) {
-                    $("#spititualMsg").text("I'm not religous and have no interest in it");
-                } else if (val > -90) {
-                    $("#spititualMsg").text("Religous people are crazy");
-                } else {
-                    $("#spititualMsg").text("I see no difference between religon and cults");
-                }
-            } else if (slider == "politicsSlider") {
-                if (val > 90) {
-                    $("#politicsMsg").text("Heil Trump and the new third reich");
-                } else if (val > 50) {
-                    $("#politicsMsg").text("I am very conservative");
-                } else if (val > 20) {
-                    $("#politicsMsg").text("I am conservative");
-                } else if (val > 0) {
-                    $("#politicsMsg").text("I probably lean conservative");
-                } else if (val > -20) {
-                    $("#politicsMsg").text("I probably lean progressive");
-                } else if (val > -50) {
-                    $("#politicsMsg").text("I am progressive");
-                } else if (val > -90) {
-                    $("#politicsMsg").text("I am very progressive");
-                } else {
-                    $("#politicsMsg").text("Welcome Comrade, let's seize the means of production");
-                }
-            }
-        }
+        
     </script>
     <style>
         #whyCollapse {
@@ -184,7 +122,25 @@
             #whyCollapse.collapsed {
                 max-height: 500px;
             }
-            
+
+        }
+
+        html {
+            overflow: hidden;
+        }
+
+        .carousel-inner div {
+            height: 500px;
+            background-size: cover;
+            background-position: 50%;
+        }
+
+        .question i,
+        .question svg {
+            margin-left: 10px;
+            margin-right: 10px;
+            padding-bottom: 2px;
+            stroke-width: 1;
         }
     </style>
 </head>
@@ -196,20 +152,30 @@
             <h2>Please take this short compatability quiz</h2>
             <br>
             <div class="question">
-                <span id="outdoorsMsg">I enjoy the Outdoors</span>
+                <span id="outdoorsMsg"><i data-feather="frown"></i>Nature<i data-feather="smile"></i></span>
                 <input type="range" min="-100" max="100" value="0" data-toggle="tooltip" data-placement="top"
                     title="Tooltip on top" id="indoorOutdoorSlider">
             </div>
             <div class="question">
-                <span id="sportsMsg">I enjoy watching sports</span>
+                <span id="sportsMsg"><i data-feather="frown"></i>Sports<i data-feather="smile"></i></span>
                 <input type="range" min="-100" max="100" value="0" id="sportsSlider">
             </div>
             <div class="question">
-                <span id="spititualMsg">My Religous leanings are</span>
+                <span id="petsMsg1"><i data-feather="thumbs-down"></i>Pets<i data-feather="heart"></i></span>
+                <input type="range" min="-100" max="100" value="0" class="petsSlider" id="petsSlider1">
+                <span id="petsMsg2" style="display: none;"><i data-feather="chevron-left"></i>Dogs or Cats<i
+                        data-feather="chevron-right"></i></span>
+                <input type="range" min="-100" max="100" value="0" class="petsSlider" style="display: none;"
+                    id="petsSlider2">
+            </div>
+            <div class="question">
+                <span id="spititualMsg"><i data-feather="thumbs-down"></i>Religion<i
+                        data-feather="thumbs-up"></i></span>
                 <input type="range" min="-100" max="100" value="0" class="spiritual" id="spiritualSlider">
             </div>
             <div class="question">
-                <span id="politicsMsg">My political leanings are</span>
+                <span id="politicsMsg"><i data-feather="arrow-left"></i>Politics<i
+                        data-feather="arrow-right"></i></span>
                 <input type="range" min="-100" max="100" value="0" class="politics" id="politicsSlider">
             </div>
             <button class="btn btn-secondary close-quiz">Skip</button>
@@ -225,7 +191,7 @@
             <button class="btn btn-primary close-quiz">Submit</button>
         </div>
     </div>
-    <div id="content" style="display: none;">
+    <div id="content">
         <!-- Header -->
         <header class="text-center bg-primary text-white py-4">
             <img src="img/favicon/android-chrome-512x512.png" alt="Profile photo" class="profile-photo">
@@ -347,49 +313,7 @@
                         </a>
                     </div>
                 </div>
-                <style>
-                    .hobby-img {
-                        height: 200px;
-                        background-repeat: no-repeat;
-                        background-size: cover;
-                        background-position: center;
-                        display: none;
-                    }
 
-                    .hobby-img:first-child {
-                        display: block;
-                    }
-
-                    .hobby-cards {
-                        display: flex;
-                        flex-wrap: wrap;
-                        justify-content: space-evenly;
-                    }
-
-                    .hobby-cards .card {
-                        max-width: 49%;
-                        width: 300px;
-                        position: relative;
-                        margin-bottom: 5px;
-                    }
-
-                    .hobby-cards .next,
-                    .hobby-cards .last {
-                        position: absolute;
-                        top: 170px;
-                        background: #00000070;
-                        color: white;
-                        border-radius: 5px;
-                    }
-
-                    .hobby-cards .next {
-                        right: 5px;
-                    }
-
-                    .hobby-cards .last {
-                        left: 5px;
-                    }
-                </style>
                 <script>
                     function buildHobbyCards() {
                         const hobbyPhotos = [{
@@ -601,23 +525,67 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="row">
+                <!-- Milly div -->
+                <div class="col-12 milly-div my-2">
+                    <div class="col-12">
+                        <h2 class="text-center w-100 mb-2">My fur-baby, Milly</h2>
+                    </div>
+                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div style="background-image: url(img/milly/milly-1.jpg); background-position-y: 30%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-2.jpg); background-position-y: 50%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-3.jpg); background-position-y: 40%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-4.jpg); background-position-y: 55%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-5.jpg); background-position-y: 40%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-6.jpg); background-position-y: 40%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                            <div class="carousel-item">
+                                <div style="background-image: url(img/milly/milly-7.jpg); background-position-y: 40%;"
+                                    class="d-block w-100" alt="milly"></div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
 
+            </div>
+            <div class="row my-2">
+                <div class="col-12">
+                    <h2 class="text-center w-100 mb-2">More of my socials</h2>
+                </div>
                 <!-- Strava div -->
                 <div class="col-12 col-md-6 iframe-col-12 iframe-col-md-6">
                     <iframe height='455' width='540' frameborder='0' allowtransparency='true' scrolling='no'
                         src='https://www.strava.com/athletes/23284380/latest-rides/954f880dea1a18f8ccb3ac73a31e8191219a39a8'></iframe>
                 </div>
-
-                <!-- Experience div -->
-                <!-- <div class="col-12 my-2">
-                    <h2 class="text-center mb-4">Experience</h2>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Job</li>
-                        <li class="list-group-item">Motorcycle</li>
-                        <li class="list-group-item">Cat</li>
-                        <li class="list-group-item">Bedframe</li>
-                    </ul>
-                </div> -->
 
                 <!-- References div -->
                 <div class="col-12 col-md-6 my-2">
@@ -647,7 +615,7 @@
                 </div>
 
                 <!-- Letterboxd div -->
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-6 py-2">
                     <div class="letterboxd-container">
                         <div class="letterboxd-logo">
                             <a href="https://letterboxd.com/mattghall/" target="_blank">

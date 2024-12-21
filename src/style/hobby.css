@@ -1,0 +1,41 @@
+.hobby-img {
+    height: 200px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: none;
+}
+
+.hobby-img:first-child {
+    display: block;
+}
+
+.hobby-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.hobby-cards .card {
+    max-width: 49%;
+    width: 300px;
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.hobby-cards .next,
+.hobby-cards .last {
+    position: absolute;
+    top: 170px;
+    background: #00000070;
+    color: white;
+    border-radius: 5px;
+}
+
+.hobby-cards .next {
+    right: 5px;
+}
+
+.hobby-cards .last {
+    left: 5px;
+}

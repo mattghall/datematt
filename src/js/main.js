@@ -27,5 +27,4 @@ $(function () {
         feather.replace();
     }, 1500);
 
-
 });

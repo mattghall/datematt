@@ -120,6 +120,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1000;
 }
 
 .tab {
@@ -147,6 +148,10 @@ body {
 
     input[type='range'].spiritual {
         background: linear-gradient(to right, #000 10%, #fff 90%);
+    }
+
+    input[type='range'].petsSlider {
+        background: linear-gradient(to right, #0084ff 20%, #ff9c08 80%);
     }
 
     input[type='range']::-webkit-slider-thumb {
