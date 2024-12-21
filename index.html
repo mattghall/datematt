@@ -28,6 +28,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <script src="dep/jquery-3.7.1.min.js"></script>
+
     <link href="dep/bootstrap-5.3.3.min.css" rel="stylesheet">
     <link href="dep/bootstrap-5.3.3.min.css.map" rel="stylesheet">
     <script src="dep/bootstrap-5.3.3.min.js"></script>
@@ -63,12 +64,9 @@
             $("input[type=range]").on("input change", function (e) {
                 sliderChange(e.target.id, e.target.value);
             });
-            $('#load-more').click(loadMovies);
-            $('.fold-me').click(function () {
-                $('.instagram-grid').toggleClass('d-none');
-                $('.fold-me .up').toggle();
-                $('.fold-me .down').toggle();
-                $('.fold-me .down').toggle();
+            $('#load-more-movies').click(loadMovies);
+            $('.fold-me').click(function (e) {
+                foldFunction(e);
             });
             $('.hobby-cards').on('click', '.next, .last', cardNavClick);
 
@@ -78,6 +76,22 @@
             setTimeout(() => loadMovies(), 2000);
 
         });
+        function foldFunction(e) {
+            var targetClass = "";
+            var classList = [];
+            if (e.target.tagName == "svg") {
+                classList = e.target.parentElement.classList;
+            } else {
+                classList = e.target.classList;
+            }
+            if (classList.contains('why')) {
+                targetClass = 'why';
+                $('#whyCollapse').toggleClass('collapsed');
+            } else if (classList.contains('instagram')) {
+                targetClass = 'instagram';
+                $('.instagram-grid').toggleClass('d-none');
+            }
+        }
 
         function sliderChange(slider, val) {
             if (slider == "indoorOutdoorSlider") {
@@ -145,6 +159,34 @@
             }
         }
     </script>
+    <style>
+        #whyCollapse {
+            max-height: 500px;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        #whyCollapse.collapsed {
+            max-height: 0px;
+        }
+
+        .fold-me.why {
+            top: 60px;
+        }
+
+        .fold-me i,
+        .fold-me svg,
+        .fold-me svg polyline {
+            pointer-events: none;
+        }
+
+        @media screen and (min-width: 768px) {
+            #whyCollapse.collapsed {
+                max-height: 500px;
+            }
+            
+        }
+    </style>
 </head>
 
 
@@ -190,7 +232,45 @@
             <h1 class="display-4">Matt Hall</h1>
             <p>Runner, Adventurer, Milly's Human</p>
         </header>
+
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+            <div class="instagram-container">
+                <div class="fold-me why">
+                    <i class="down" data-feather="chevron-down"></i>
+                    <i class="up" data-feather="chevron-up"></i>
+                </div>
+                <div>
+                    <div>
+                        <h1>Why?</h1>
+                        <p>TLDR: Dating apps have ruined dating...</p>
+                    </div>
+                </div>
+                <div id="whyCollapse" class="collapsed">
+                    <p>Unfortunately, society has created an environment where it is
+                        difficult to meet people in
+                        <em>real</em> life
+                        because people live under the illusion of an unlimited queue of perfect partners just one
+                        swipe
+                        away.
+                        So how do you meet people without dating apps? Well, I haven't quite figured that out yes so
+                        I
+                        decided to
+                        do what I know best; make a silly website. Specifically one to advertise myself to potential
+                        partners and let
+                        them know what they'd be getting into.
+                    </p>
+                    <p class="small">Here's a great
+                        <a
+                            href="https://www.npr.org/sections/money/2024/02/13/1228749143/the-dating-app-paradox-why-dating-apps-may-be-worse-than-ever">NPR
+                            article</a>
+                        going into more detail about it.
+                    </p>
+                </div>
+
+            </div>
+        </div>
         <div class="container">
+
             <div class="row">
                 <!-- About Me div -->
                 <div class="col-12 my-3">
@@ -210,7 +290,7 @@
                 <!-- Instagram div -->
                 <div class="col-12">
                     <div class="instagram-container">
-                        <div class="insta-logo">
+                        <div class="corner-logo">
                             <a href="https://www.instagram.com/mattghall/" target="_blank">
                                 <a href="https://www.instagram.com/mattghall/" target="_blank">
                                     <img src="img/instagram/insta-logo.jpg" alt="Instagram"
@@ -218,7 +298,7 @@
                                 </a>
                             </a>
                         </div>
-                        <div class="fold-me">
+                        <div class="fold-me instagram">
                             <i class="down" data-feather="chevron-down"></i>
                             <i class="up" data-feather="chevron-up"></i>
                         </div>
@@ -574,8 +654,8 @@
                                 <img src="img/letterboxd-logo.svg" alt="Letterboxd">
                             </a>
                         </div>
-                        <div class="insta-logo">
-                            <i id="load-more" data-feather="plus-circle"></i>
+                        <div class="corner-logo">
+                            <i id="load-more-movies" data-feather="plus-circle"></i>
                         </div>
                         <div id="movie-grid" class="row g-4"></div>
                     </div>
