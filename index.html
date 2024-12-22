@@ -41,33 +41,6 @@
     <script src="dist/js/hobby.js"></script>
 
     <script>
-
-        function submitQuiz() {
-            if ($("#politicsSlider").val() > 20 || $("#spiritualSlider").val() > 34) {
-                failQuiz();
-            } else {
-                $("#quiz").hide();
-                $("html").css("overflow", "auto");
-            }
-        }
-
-        function failQuiz() {
-            $("#rickRoll, #rejection").show();
-            $("#quiz div, #content").remove()
-            $("audio")[0].play();
-            $("#quiz").css("opacity", "0%");
-            $("#rejection").css("opacity", "100%");
-            $("#rickRoll").addClass("move");
-            setTimeout(() => {
-                $("#quiz").remove();
-                $("#rejection").addClass("rainbow");
-            }, 6000);
-            setTimeout(() => {
-                $("#rickRoll").addClass("slide");
-                $("#rickRoll").removeClass("move");
-            }, 15000);
-        }
-
         $(document).ready(function () {
             $("#next1, .close-quiz").click(function () {
                 submitQuiz();
@@ -116,16 +89,16 @@
             <h2>Please take this short compatability quiz</h2>
             <br>
             <div class="question">
-                <span id="outdoorsMsg"><i data-feather="frown"></i>Nature<i data-feather="smile"></i></span>
+                <i data-feather="frown"></i><span id="outdoorsMsg">Nature</span><i data-feather="smile"></i>
                 <input type="range" min="-100" max="100" value="0" data-toggle="tooltip" data-placement="top"
                     title="Tooltip on top" id="indoorOutdoorSlider">
             </div>
             <div class="question">
-                <span id="sportsMsg"><i data-feather="frown"></i>Sports<i data-feather="smile"></i></span>
+                <i data-feather="frown"></i><span id="sportsMsg">Sports</span><i data-feather="smile"></i>
                 <input type="range" min="-100" max="100" value="0" id="sportsSlider">
             </div>
             <div class="question">
-                <span id="petsMsg1"><i data-feather="thumbs-down"></i>Pets<i data-feather="heart"></i></span>
+                <i data-feather="thumbs-down"></i><span id="petsMsg1">Pets</span><i data-feather="heart"></i>
                 <input type="range" min="-100" max="100" value="0" class="petsSlider" id="petsSlider1">
                 <span id="petsMsg2" style="display: none;"><i data-feather="chevron-left"></i>Dogs or Cats<i
                         data-feather="chevron-right"></i></span>
@@ -133,17 +106,17 @@
                     id="petsSlider2">
             </div>
             <div class="question">
-                <span id="spititualMsg"><i data-feather="thumbs-down"></i>Religion<i
-                        data-feather="thumbs-up"></i></span>
+                <i data-feather="thumbs-down"></i><span id="spititualMsg">Religion</span><i
+                    data-feather="thumbs-up"></i>
                 <input type="range" min="-100" max="100" value="0" class="spiritual" id="spiritualSlider">
             </div>
             <div class="question">
-                <span id="politicsMsg"><i data-feather="arrow-left"></i>Politics<i
-                        data-feather="arrow-right"></i></span>
+                <i data-feather="arrow-left"></i><span id="politicsMsg">Politics</span><i
+                    data-feather="arrow-right"></i>
                 <input type="range" min="-100" max="100" value="0" class="politics" id="politicsSlider">
             </div>
             <button class="btn btn-secondary close-quiz">Skip</button>
-            <button id="next1" class="btn btn-primary">Next</button>
+            <button id="next1" class="btn btn-primary">Submit</button>
         </div>
         <div id="tab2" class="tab">
             <h2>Question 2: Select all that apply</h2>
@@ -155,7 +128,10 @@
             <button class="btn btn-primary close-quiz">Submit</button>
         </div>
     </div>
-    <h1 id="rejection">Sorry, I don't think we're a good match</h1>
+    <div id="rejection">
+        <h1>Sorry, I don't think we're a good match</h1>
+        <h2>but I might know someone who is...</h2>
+    </div>
 
 
     <div id="rickRoll">

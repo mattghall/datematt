@@ -1,3 +1,46 @@
+function submitQuiz() {
+    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 34 || $("#petsSlider1").val() <= -60) {
+        failQuiz();
+    } else {
+        $("#quiz").hide();
+        $("html").css("overflow", "auto");
+    }
+}
+
+function failQuiz() {
+    $("#rickRoll, #rejection").show();
+    $("#quiz div, #content").remove()
+    $("#rejection h1").css("opacity", "100%");
+    setTimeout(() => {
+        $("#rejection h2").css("opacity", "100%");
+        setTimeout(() => {
+            $("audio")[0].play();
+            $("#quiz").css("opacity", "0%");
+            $("#rickRoll").addClass("move");
+            setTimeout(() => {
+                $("#rejection *").addClass("rainbow");
+                setTimeout(() => {
+                    $("#rejection").css("opacity", "0%");
+                    setTimeout(() => {
+                        $("#rejection *").removeClass("rainbow");
+                        $("#rejection h1").text("You're still here?");
+                        $("#rejection h2").text("Why? Who hurt you?");
+                        $("#rejection").css("opacity", "100%");
+                    }, 180000);
+                }, 10000);
+            }, 1000);
+        }, 1000);
+    }, 2000);
+    setTimeout(() => {
+        $("#quiz").remove();
+
+    }, 6000);
+    setTimeout(() => {
+        $("#rickRoll").addClass("slide");
+        $("#rickRoll").removeClass("move");
+    }, 15000);
+}
+
 function sliderChange(slider, val) {
     if (slider == "indoorOutdoorSlider") {
         if (val > 60) {
