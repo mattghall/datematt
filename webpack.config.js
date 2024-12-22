@@ -30,7 +30,8 @@ module.exports = {
       patterns: [
         { from: 'src/js/service-worker.js', to: path.resolve(__dirname, 'dist/js/service-worker.js') },
         { from: 'src/js/movies.js', to: path.resolve(__dirname, 'dist/js/movies.js') },
-        { from: 'src/js/quiz.js', to: path.resolve(__dirname, 'dist/js/quiz.js') }
+        { from: 'src/js/quiz.js', to: path.resolve(__dirname, 'dist/js/quiz.js') },
+        { from: 'src/js/hobby.js', to: path.resolve(__dirname, 'dist/js/hobby.js') }
       ]
     })
   ],

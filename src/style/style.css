@@ -6,6 +6,15 @@ html {
     align-items: center;
 }
 
+html {
+    overflow: hidden;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
 .container {
     background-color: #f8f9fa;
 }
@@ -57,10 +66,7 @@ header {
     color: #FFB800;
 }
 
-body {
-    background-color: #f8f9fa;
-    font-family: Helvetica, Arial, sans-serif;
-}
+
 
 .profile-photo {
     border-radius: 50%;
@@ -129,6 +135,47 @@ body {
 
 .question {
     margin-bottom: 20px;
+}
+
+.question i,
+.question svg {
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 2px;
+    stroke-width: 1;
+}
+
+#whyCollapse {
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+}
+
+#whyCollapse.collapsed {
+    max-height: 0px;
+}
+
+.fold-me.why {
+    top: 60px;
+}
+
+.fold-me i,
+.fold-me svg,
+.fold-me svg polyline {
+    pointer-events: none;
+}
+
+@media screen and (min-width: 768px) {
+    #whyCollapse.collapsed {
+        max-height: 500px;
+    }
+
+}
+
+.carousel-inner div {
+    height: 500px;
+    background-size: cover;
+    background-position: 50%;
 }
 
 /* Input Sliders */
