@@ -41,29 +41,39 @@
     <script src="dist/js/hobby.js"></script>
 
     <script>
+
+        function submitQuiz() {
+            if ($("#politicsSlider").val() > 20 || $("#spiritualSlider").val() > 34) {
+                failQuiz();
+            } else {
+                $("#quiz").hide();
+                $("html").css("overflow", "auto");
+            }
+        }
+
+        function failQuiz() {
+            $("#rickRoll, #rejection").show();
+            $("#quiz div, #content").remove()
+            $("audio")[0].play();
+            $("#quiz").css("opacity", "0%");
+            $("#rejection").css("opacity", "100%");
+            $("#rickRoll").addClass("move");
+            setTimeout(() => {
+                $("#quiz").remove();
+                $("#rejection").addClass("rainbow");
+            }, 6000);
+            setTimeout(() => {
+                $("#rickRoll").addClass("slide");
+                $("#rickRoll").removeClass("move");
+            }, 15000);
+        }
+
         $(document).ready(function () {
-            $("#next1").click(function () {
-                if ($("#politicsSlider").val() > 20 || $("#spiritualSlider").val() > 20) {
-                    alert("Sorry, I don't think we are very compatible. I'd recommend looking elsewhere.");
-                    window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran";
-                } else {
-                    // $("#tab1").hide();
-                    // $("#tab2").show();
-                    $("#quiz").hide();
-                    // $("#content").show();
-                    $("html").css("overflow", "auto");
-                }
+            $("#next1, .close-quiz").click(function () {
+                submitQuiz();
             });
             $(".close-quiz").click(function () {
-                if ($("#politicsSlider").val() > 20 || $("#spiritualSlider").val() > 20) {
-                    alert("Sorry, I don't think we are very compatible. I'd recommend looking elsewhere.");
-                    window.location.href = "https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=Duran";
-                } else {
-                    $("#quiz").hide();
-                    // $("#content").show();
-                    $("html").css("overflow", "auto");
-                }
-
+                submitQuiz();
             });
             $("input[type=range]").on("input change", function (e) {
                 sliderChange(e.target.id, e.target.value);
@@ -96,14 +106,12 @@
                 $('.instagram-grid').toggleClass('d-none');
             }
         }
-
-
     </script>
 </head>
 
 
 <body>
-    <div id="quiz" style="background-color: aquamarine;">
+    <div id="quiz">
         <div id="tab1" class="tab" style="display: block;">
             <h2>Please take this short compatability quiz</h2>
             <br>
@@ -147,6 +155,24 @@
             <button class="btn btn-primary close-quiz">Submit</button>
         </div>
     </div>
+    <h1 id="rejection">Sorry, I don't think we're a good match</h1>
+
+
+    <div id="rickRoll">
+        <audio controls autoplay>
+            <source src="music/rick-roll.ogg" type="audio/ogg">
+            <source src="music/rick-roll.mp3" type="audio/mpeg">
+            Your browser does not support the audio element. Enjoy Rick Astley dancing in silence!
+        </audio>
+    </div>
+
+    <style>
+        audio {
+            position: absolute;
+            position-area: center;
+            margin-top: 300px;
+        }
+    </style>
     <div id="content">
         <!-- Header -->
         <header class="text-center bg-primary text-white py-4">
@@ -281,7 +307,6 @@
         </div>
         <div class="container">
             <div class="row">
-
                 <!-- Qualifications div -->
                 <div class="col-12 my-2">
                     <h2 class="text-center w-100 mb-2">Qualifications</h2>
@@ -353,8 +378,8 @@
                     </div>
                 </div>
             </div>
+            <!-- Milly row -->
             <div class="row">
-                <!-- Milly div -->
                 <div class="col-12 milly-div my-2">
                     <div class="col-12">
                         <h2 class="text-center w-100 mb-2">My fur-baby, Milly</h2>
@@ -413,8 +438,6 @@
                     <iframe height='455' width='540' frameborder='0' allowtransparency='true' scrolling='no'
                         src='https://www.strava.com/athletes/23284380/latest-rides/954f880dea1a18f8ccb3ac73a31e8191219a39a8'></iframe>
                 </div>
-
-
 
                 <!-- Spotify div -->
                 <div class="col-12 col-md-6 iframe-col-12 iframe-col-md-6">

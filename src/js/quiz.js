@@ -65,10 +65,12 @@ function sliderChange(slider, val) {
     } else if (slider == "spiritualSlider") {
         if (val > 75) {
             $("#spititualMsg").text("Religon is a very big part of my life");
-        } else if (val > 20) {
+        } else if (val > 35) {
             $("#spititualMsg").text("I consider myself religous");
+        } else if (val > 15) {
+            $("#spititualMsg").text("I'm somewhat religous");
         } else if (val > -20) {
-            $("#spititualMsg").text("I consider myself spiritual");
+            $("#spititualMsg").text("I more spiritual than religous");
         } else if (val > -50) {
             $("#spititualMsg").text("I'm not very religous");
         } else if (val > -70) {

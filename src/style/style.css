@@ -126,7 +126,128 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 900;
+    opacity: 100%;
+    transition: ease-in-out 5s;
+}
+
+#rejection {
+    color: white;
+    font-size: xxx-large;
+    opacity: 0%;
+    position: absolute;
+    text-align: center;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    top: 35%;
+    transition: ease-in-out 1s;
+    width: 100%;
     z-index: 1000;
+    padding: 25px;
+    display: none;
+}
+
+.rainbow {
+    animation: colorRotate 6s linear 0s infinite;
+}
+
+@keyframes colorRotate {
+    from {
+        color: #6666ff;
+    }
+
+    10% {
+        color: #0099ff;
+    }
+
+    50% {
+        color: #00ff00;
+    }
+
+    75% {
+        color: #ff3399;
+    }
+
+    100% {
+        color: #6666ff;
+    }
+}
+
+#rickRoll {
+    align-items: end;
+    background-color: aquamarine;
+    background-image: image-set(url("https://i.giphy.com/Ju7l5y9osyymQ.webp") type("image/webp"), url("https://i.giphy.com/Ju7l5y9osyymQ.webp") type("image/webp"));
+    background-image: url("https://i.giphy.com/Ju7l5y9osyymQ.webp");
+    background-position-x: center;
+    background-size: auto 110%;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    overflow: hidden;
+    padding-bottom: 20%;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    transition: 3s;
+    width: 100%;
+    z-index: 800;
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    #rickRoll.slide {
+        animation: rickRollAnimation2 15s infinite;
+        animation-direction: normal;
+        background-size: auto 15%;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    #rejection {
+        top: 34%;
+    }
+
+    #rickRoll.slide {
+        animation: rickRollAnimation2 90s infinite;
+        animation-direction: normal;
+        background-size: auto 15%;
+    }
+}
+
+#rickRoll.move {
+    animation: rickRollAnimation1 15s infinite;
+    background-position-x: center;
+    animation-direction: alternate;
+}
+
+
+
+@keyframes rickRollAnimation1 {
+    from {
+        background-size: auto 110%;
+    }
+
+    20% {
+        background-size: auto 100%;
+    }
+
+    80% {
+        background-size: auto 15%;
+    }
+
+    to {
+        background-size: auto 10%;
+    }
+}
+
+@keyframes rickRollAnimation2 {
+    from {
+        background-position-x: 50%;
+    }
+
+    to {
+        background-position-x: 450%;
+    }
 }
 
 .tab {
