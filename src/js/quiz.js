@@ -1,5 +1,5 @@
-function submitQuiz() {
-    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 34 || $("#petsSlider1").val() <= -60) {
+function passFailQuiz() {
+    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 34 || $("#pets1Slider").val() <= -60) {
         failQuiz();
     } else {
         $("#quiz").hide();
@@ -70,58 +70,58 @@ function sliderChange(slider, val) {
         } else {
             $("#sportsMsg").text("I hate sports ball");
         }
-    } else if (slider == "petsSlider1") {
+    } else if (slider == "pets1Slider") {
         if (val < -20) {
-            $("#petsSlider2, #petsMsg2").hide()
+            $("#pets2Slider, #pets2Msg").hide()
         } else if (val > 20) {
-            $("#petsSlider2, #petsMsg2").show()
+            $("#pets2Slider, #pets2Msg").show()
         }
         if (val > 85) {
-            $("#petsMsg1").text("I'm obsessed with pets");
+            $("#pets1Msg").text("I'm obsessed with pets");
         } else if (val > 60) {
-            $("#petsMsg1").text("I love pets");
+            $("#pets1Msg").text("I love pets");
         } else if (val > 20) {
-            $("#petsMsg1").text("I like pets");
+            $("#pets1Msg").text("I like pets");
         } else if (val > -20) {
-            $("#petsMsg1").text("I tolerate pets");
+            $("#pets1Msg").text("I tolerate pets");
         } else if (val > -60) {
-            $("#petsMsg1").text("I don't prefer pets");
+            $("#pets1Msg").text("I don't prefer pets");
         } else {
-            $("#petsMsg1").text("I hate pets");
+            $("#pets1Msg").text("I hate pets");
         }
-    } else if (slider == "petsSlider2") {
+    } else if (slider == "pets2Slider") {
         if (val > 80) {
-            $("#petsMsg2").text("Only cats");
+            $("#pets2Msg").text("Only cats");
         } else if (val > 60) {
-            $("#petsMsg2").text("I love cats, tolerate dogs");
+            $("#pets2Msg").text("I love cats, tolerate dogs");
         } else if (val > 20) {
-            $("#petsMsg2").text("I prefer cats");
+            $("#pets2Msg").text("I prefer cats");
         } else if (val > -20) {
-            $("#petsMsg2").text("I like both equally");
+            $("#pets2Msg").text("I like both equally");
         } else if (val > -60) {
-            $("#petsMsg2").text("I prefer dogs");
+            $("#pets2Msg").text("I prefer dogs");
         } else if (val > -80) {
-            $("#petsMsg2").text("I love dogs, tolerate cats");
+            $("#pets2Msg").text("I love dogs, tolerate cats");
         } else {
-            $("#petsMsg2").text("Only dogs");
+            $("#pets2Msg").text("Only dogs");
         }
     } else if (slider == "spiritualSlider") {
         if (val > 75) {
-            $("#spititualMsg").text("Religon is a very big part of my life");
+            $("#spiritualMsg").text("Religon is a very big part of my life");
         } else if (val > 35) {
-            $("#spititualMsg").text("I consider myself religous");
+            $("#spiritualMsg").text("I consider myself religous");
         } else if (val > 15) {
-            $("#spititualMsg").text("I'm somewhat religous");
+            $("#spiritualMsg").text("I'm somewhat religous");
         } else if (val > -20) {
-            $("#spititualMsg").text("I more spiritual than religous");
+            $("#spiritualMsg").text("I more spiritual than religous");
         } else if (val > -50) {
-            $("#spititualMsg").text("I'm not very religous");
+            $("#spiritualMsg").text("I'm not very religous");
         } else if (val > -70) {
-            $("#spititualMsg").text("I'm not religous, but respect others' beliefs");
+            $("#spiritualMsg").text("I'm not religous, but respect others' beliefs");
         } else if (val > -85) {
-            $("#spititualMsg").text("Religous people are crazy");
+            $("#spiritualMsg").text("Religous people are crazy");
         } else {
-            $("#spititualMsg").text("I see no difference between religon and cults");
+            $("#spiritualMsg").text("I see no difference between religon and cults");
         }
     } else if (slider == "politicsSlider") {
         if (val > 90) {

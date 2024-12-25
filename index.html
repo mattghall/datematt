@@ -63,6 +63,85 @@
             setTimeout(() => loadMovies(), 2000);
 
         });
+
+        // background: linear-gradient(to right, #9c0000 50%, #4b78ca 55%, #00ac09 100%);
+        function gradientBuilder(gradientList) {
+            if (gradientList.length % 2 != 0) {
+                console.error("Gradient list must have an even number of values");
+                return;
+            }
+            var gradientString = "linear-gradient(to right";
+
+            for (var i = 0; i < gradientList.length; i += 2) {
+                gradientString += ", " + gradientList[i] + " " + gradientList[i + 1] + "%";
+            }
+            gradientString += ")";
+            return gradientString;
+
+        }
+
+        function setBackground(match, matt, difference) {
+            match = (Number(match) + 100) / 2 || 0;
+            matt = (Number(matt) + 100) / 2 || 0;
+            var startColor = "lightgray";
+            var white = "white";
+            var diffColor = "green";
+            var midColor = "#0ece05";
+            var endColor = "lightgray";
+            if (difference > 25) {
+                diffColor = "yellow";
+                midColor = "#ffcc00";
+            } else if (difference > 50) {
+                diffColor = "orange";
+                midColor = "#ff8c00";
+            } else if (difference > 75) {
+                diffColor = "red";
+                midColor = "#ff0000";
+            }
+            // background: linear-gradient(to right, #9c0000 50%, #4b78ca 55%, #00ac09 100%);
+            var firstPercent;
+            var secondPercent;
+            if (match < matt) {
+                firstPercent = match;
+                secondPercent = matt;
+            } else {
+                firstPercent = matt;
+                secondPercent = match;
+            }
+            return gradientBuilder([startColor, 0,
+                startColor, (firstPercent - 3),
+                white, (firstPercent - 2),
+                white, (firstPercent + 2),
+                diffColor, (firstPercent + 3),
+                midColor, (firstPercent + secondPercent) / 2,
+                diffColor, (secondPercent - 3),
+                white, (secondPercent - 2),
+                white, (secondPercent + 2),
+                endColor, (secondPercent + 3)]);
+        }
+
+        function submitQuiz() {
+            $("input[type='range']").addClass("hideThumb")
+            $("#tab1 h2").text("Results")
+            var sliders = ["nature", "sports", "pets1", "pets2", "spiritual", "politics"];
+            var sliderTitles = ["Nature", "Sports", "Pets", "Cats", "Religion", "Politics"];
+            var mattVal = [85, 85, 85, 35, -90, -90];
+            for (var i = 0; i < sliders.length; i++) {
+                setTimeout(function (i) {
+                    var slider = $("#" + sliders[i] + "Slider");
+                    var difference = Math.abs(mattVal[i] - Number(slider.val()));
+                    var msgText = "#" + sliders[i] + "Msg"
+                    $(msgText).text(sliderTitles[i] + ": " + difference);
+                    slider.css("background", setBackground(slider.val(), mattVal[i], difference));
+                }, i * 500, i);
+            }
+
+            setTimeout(() => {
+                passFailQuiz();
+            }, i * 10000);
+
+        }
+
         function foldFunction(e) {
             var targetClass = "";
             var classList = [];
@@ -80,6 +159,9 @@
             }
         }
     </script>
+    <style>
+
+    </style>
 </head>
 
 
@@ -89,24 +171,24 @@
             <h2>Please take this short compatability quiz</h2>
             <br>
             <div class="question">
-                <i data-feather="frown"></i><span id="outdoorsMsg">Nature</span><i data-feather="smile"></i>
+                <i data-feather="frown"></i><span id="natureMsg">Nature</span><i data-feather="smile"></i>
                 <input type="range" min="-100" max="100" value="0" data-toggle="tooltip" data-placement="top"
-                    title="Tooltip on top" id="indoorOutdoorSlider">
+                    title="Tooltip on top" id="natureSlider">
             </div>
             <div class="question">
                 <i data-feather="frown"></i><span id="sportsMsg">Sports</span><i data-feather="smile"></i>
                 <input type="range" min="-100" max="100" value="0" id="sportsSlider">
             </div>
             <div class="question">
-                <i data-feather="thumbs-down"></i><span id="petsMsg1">Pets</span><i data-feather="heart"></i>
-                <input type="range" min="-100" max="100" value="0" class="petsSlider" id="petsSlider1">
-                <span id="petsMsg2" style="display: none;"><i data-feather="chevron-left"></i>Dogs or Cats<i
+                <i data-feather="thumbs-down"></i><span id="pets1Msg">Pets</span><i data-feather="heart"></i>
+                <input type="range" min="-100" max="100" value="0" class="petsSlider" id="pets1Slider">
+                <span id="pets2Msg" style="display: none;"><i data-feather="chevron-left"></i>Dogs or Cats<i
                         data-feather="chevron-right"></i></span>
                 <input type="range" min="-100" max="100" value="0" class="petsSlider" style="display: none;"
-                    id="petsSlider2">
+                    id="pets2Slider">
             </div>
             <div class="question">
-                <i data-feather="thumbs-down"></i><span id="spititualMsg">Religion</span><i
+                <i data-feather="thumbs-down"></i><span id="spiritualMsg">Religion</span><i
                     data-feather="thumbs-up"></i>
                 <input type="range" min="-100" max="100" value="0" class="spiritual" id="spiritualSlider">
             </div>
@@ -421,7 +503,7 @@
                         src="https://open.spotify.com/embed/playlist/37i9dQZF1FoHIGGzxTy4OD?utm_source=generator&theme=0"
                         width="100%" height="530" frameBorder="0" allowfullscreen=""
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                        loading="lazy"></iframe>
+                        loading="lazy" allowfullscreen></iframe>
                 </div>
 
                 <!-- Letterboxd div -->

@@ -320,6 +320,10 @@ header {
     background-position: 50%;
 }
 
+#tab1 {
+    width: 100%;
+}
+
 /* Input Sliders */
 /*Chrome*/
 @media screen and (-webkit-min-device-pixel-ratio:0) {
@@ -348,7 +352,17 @@ header {
         -webkit-appearance: none;
         height: 20px;
         cursor: ew-resize;
-        background: #aed4ff;
+        background: black;
+        opacity: 100%;
+    }
+
+    input[type='range'].hideThumb::-webkit-slider-thumb {
+        opacity: 0%;
+        cursor: default;
+    }
+
+    input[type='range'].hideThumb:hover {
+        cursor: default;
     }
 
 }
