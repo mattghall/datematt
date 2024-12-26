@@ -92,6 +92,14 @@ function setBackground(match, matt, difference) {
                     white, secondPercent,
                     darkerColor, (secondPercent + 1),
                     darkerColor, 100]);
+        } else {
+            var midGap = (firstPercent + secondPercent) / 2;
+            return gradientBuilder([
+                lighterColor, 0,
+                darkerColor, (firstPercent - 3),
+                white, (firstPercent - 2), white, (secondPercent + 2),
+                darkerColor, (secondPercent + 3),
+                lighterColor, 100]);
         }
     } else {
         var midGap = (firstPercent + secondPercent) / 2;
@@ -123,7 +131,6 @@ function initResultMap() {
 
 function submitQuiz() {
     $("#submitQuiz").attr("disabled", "true");
-    $("input[type='range']").addClass("hideThumb")
     $("input[type='range']").attr("disabled");
     $("#tab1 h2").text("Results")
     var sliders = ["nature", "sports", "pets1", "pets2", "spiritual", "politics"];
@@ -145,7 +152,7 @@ function submitQuiz() {
                     break;
                 case "pets2":
                     if (result < 0) {
-                        sliderTitles[i] = "Dog Preference";
+                        sliderTitles[i] = "Pet Preference";
                         mattVal[i] = 21;
                         difference = Math.abs(mattVal[i] - result) / 2;
                     } else {
@@ -197,6 +204,7 @@ function submitQuiz() {
             difference
             var matchPerent = difference > 100 ? 0 : 100 - Math.floor(difference);
             resultMap[sliders[i]] = matchPerent;
+            slider.addClass("hideThumb")
             $(msgText).text(sliderTitles[i] + ": " + matchPerent + "% Match");
             $("#tab1 h2").text("Results: " + totalMatchPercent() + "% Match")
             slider.css("background", setBackground(slider.val(), mattVal[i], difference));
@@ -218,13 +226,21 @@ function totalMatchPercent() {
         count++;
     }
     var total = Math.ceil(total / count);
-    if (resultMap["spiritual"] >= 0 && resultMap["politics"] >= 0) {
-        if (resultMap["politics"] < 70) {
-            return total / 2;
+    if (resultMap["spiritual"] >= 0) {
+        if ($("#spiritualSlider").val() > 34) {
+            return 0;
         } else if (resultMap["spiritual"] < 60) {
-            return total * .75
+            total = total * .75;
         } else if (resultMap["spiritual"] < 40) {
-            return total / 2
+            total = total * .50;
+        }
+    }
+    if (resultMap["politics"] >= 0) {
+        if ($("#politicsSlider").val() > 19) {
+            return 0;
+        }
+        if (resultMap["politics"] < 70) {
+            total = total * .50;
         }
     }
     if (!total) {
@@ -293,17 +309,17 @@ function failQuiz() {
 function sliderChange(slider, val) {
     if (slider == "natureSlider") {
         if (val > 60) {
-            $("#outdoorsMsg").text("I love the Outdoors");
+            $("#natureMsg").text("I love the Outdoors");
         } else if (val > 20) {
-            $("#outdoorsMsg").text("I like the Outdoors");
+            $("#natureMsg").text("I like the Outdoors");
         }
         else if (val > -20) {
-            $("#outdoorsMsg").text("I tolerate the Outdoors");
+            $("#natureMsg").text("I tolerate the Outdoors");
         }
         else if (val > -60) {
-            $("#outdoorsMsg").text("I don't love the Outdoors");
+            $("#natureMsg").text("I don't love the Outdoors");
         } else {
-            $("#outdoorsMsg").text("I'd like to stay inside, thanks'");
+            $("#natureMsg").text("I'd like to stay inside, thanks'");
         }
     } else if (slider == "sportsSlider") {
         if (val > 85) {
@@ -321,9 +337,9 @@ function sliderChange(slider, val) {
         }
     } else if (slider == "pets1Slider") {
         if (val < -20) {
-            $("#pets2Slider, #pets2Msg").hide()
+            $(".petQ2").css("max-height", "0px");
         } else if (val > 20) {
-            $("#pets2Slider, #pets2Msg").show()
+            $(".petQ2").css("max-height", "60px");
         }
         if (val > 85) {
             $("#pets1Msg").text("I'm obsessed with pets");
@@ -346,7 +362,11 @@ function sliderChange(slider, val) {
         } else if (val > 20) {
             $("#pets2Msg").text("I prefer cats");
         } else if (val > -20) {
-            $("#pets2Msg").text("I like both equally");
+            var likeLove = "like";
+            if ($("#pets1Slider").val() > 60) {
+                likeLove = "love";
+            }
+            $("#pets2Msg").text("I " + likeLove + " both equally");
         } else if (val > -60) {
             $("#pets2Msg").text("I prefer dogs");
         } else if (val > -80) {

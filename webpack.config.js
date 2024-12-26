@@ -24,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '../style/[name].css',  // CSS files will go into dist/style
+      filename: '../style/[name].css',
     }),
     new CopyWebpackPlugin({
       patterns: [

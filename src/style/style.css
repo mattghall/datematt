@@ -131,6 +131,14 @@ header {
     transition: ease-in-out 2s;
 }
 
+.petQ2 {
+    height: auto;
+    max-height: 0px;
+    overflow: hidden;
+    margin-top: -20px;
+    transition: max-height linear 1s;
+}
+
 #rejection {
     color: white;
     font-size: xxx-large;
@@ -280,19 +288,24 @@ header {
 }
 
 .question i,
-.question svg {
+.question svg,
+.question img {
     position: absolute;
     padding-bottom: 2px;
     stroke-width: 1;
+    height: 24px;
+    width: 24px;
 }
 
 .question i:first-of-type,
-.question svg:first-of-type {
+.question svg:first-of-type,
+.question img:first-of-type {
     left: 0;
 }
 
 .question i:last-of-type,
-.question svg:last-of-type {
+.question svg:last-of-type,
+.question img:last-of-type {
     right: 0;
 }
 
