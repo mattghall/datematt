@@ -128,7 +128,7 @@ header {
     align-items: center;
     z-index: 900;
     opacity: 100%;
-    transition: ease-in-out 5s;
+    transition: ease-in-out 2s;
 }
 
 #rejection {
@@ -183,6 +183,11 @@ header {
     }
 }
 
+#tab1 h2 {
+    color: #000;
+    transition: ease-in 1s;
+}
+
 #rickRoll {
     align-items: end;
     background-color: aquamarine;
@@ -210,6 +215,10 @@ header {
         animation: rickRollAnimation2 15s infinite;
         animation-direction: normal;
         background-size: auto 15%;
+    }
+
+    #tab1 {
+        width: 100%;
     }
 }
 
@@ -321,7 +330,7 @@ header {
 }
 
 #tab1 {
-    width: 100%;
+    min-width: 50%;
 }
 
 /* Input Sliders */
@@ -348,16 +357,18 @@ header {
     }
 
     input[type='range']::-webkit-slider-thumb {
-        width: 20px;
         -webkit-appearance: none;
+        width: 20px;
         height: 20px;
         cursor: ew-resize;
-        background: black;
+        background: whitesmoke;
+        border: #000 2px solid;
         opacity: 100%;
+        /* border-radius: 10px; */
     }
 
     input[type='range'].hideThumb::-webkit-slider-thumb {
-        opacity: 0%;
+        opacity: 2%;
         cursor: default;
     }
 
