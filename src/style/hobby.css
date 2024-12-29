@@ -1,4 +1,4 @@
-.hobby-img {
+div.hobby-img {
     height: 200px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -6,14 +6,28 @@
     display: none;
 }
 
-.hobby-img:first-child {
+img.hobby-img {
+    width: 100%;
+    display: none;
+}
+
+div.hobby-img:first-child {
     display: block;
+}
+
+img.hobby-img:first-child {
+    display: none;
+}
+
+.card-img-top.hobby-img.expanded {
+    background-size: contain;
 }
 
 .hobby-cards {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    transition: max-height 3s;
 }
 
 .hobby-cards .card {
@@ -24,7 +38,9 @@
 }
 
 .hobby-cards .next,
-.hobby-cards .last {
+.hobby-cards .last,
+.hobby-cards .expand,
+.hobby-cards .shrink {
     position: absolute;
     top: 170px;
     background: #00000070;
@@ -36,6 +52,49 @@
     right: 5px;
 }
 
+.hobby-cards .expand,
+.hobby-cards .shrink {
+    top: 5px;
+    right: 5px;
+}
+
+.hobby-cards .shrink {
+    display: none;
+}
+
 .hobby-cards .last {
     left: 5px;
+}
+
+.hobby-cards .hobby-load-more {
+    max-width: 100%;
+    width: 100%;
+    height: 25px;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    display: none;
+    background-color: transparent;
+    position: relative;
+    margin-bottom: 5px;
+    flex-direction: column;
+}
+
+@media screen and (max-width: 768px) {
+    .hobby-cards .card {
+        display: none;
+    }
+
+    .hobby-cards .card.show-card {
+        display: flex;
+    }
+
+    .hobby-cards {
+        max-height: 600px;
+    }
+
+    .hobby-cards .hobby-load-more {
+        display: flex;
+    }
+
 }

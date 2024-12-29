@@ -59,6 +59,7 @@
                 foldFunction(e);
             });
             $('.hobby-cards').on('click', '.next, .last', cardNavClick);
+            $('.hobby-cards').on('click', '.expand, .shrink', expandHobbyImg);
 
             initResultMap()
             loadMovies();
@@ -67,6 +68,7 @@
             setTimeout(() => loadMovies(), 2000);
 
         });
+
 
         function foldFunction(e) {
             var targetClass = "";
@@ -93,7 +95,8 @@
             <h2>Please take this short compatability quiz</h2>
             <br>
             <div class="question">
-                <i data-feather="frown"></i><span id="natureMsg">Nature</span><i data-feather="smile"></i>
+                <img src="img/icons/house.svg"></img></i><span id="natureMsg">Nature</span><img
+                    src="img/icons/tree.svg"></img>>
                 <input type="range" min="-100" max="100" value="0" data-toggle="tooltip" data-placement="top"
                     title="Tooltip on top" id="natureSlider">
             </div>
@@ -106,17 +109,18 @@
                 <input type="range" min="-100" max="100" value="0" class="petsSlider" id="pets1Slider">
             </div>
             <div class="question petQ2">
-                <img src="img/dog-icon.png"></i><span id="pets2Msg">Dogs or Cats</span><img src="img/cat-icon.png">
-                <input type="range" min="-100" max="100" value="0" class="petsSlider" id="pets2Slider">
+                <img src="img/icons/dog.svg"></img></i><span id="pets2Msg">Dogs or Cats</span><img
+                    src="img/icons/cat.svg"></img>
+                <input type=" range" min="-100" max="100" value="0" class="petsSlider" id="pets2Slider">
             </div>
             <div class="question">
-                <i data-feather="thumbs-down"></i><span id="spiritualMsg">Religion</span><i
-                    data-feather="thumbs-up"></i>
+                <img src="img/icons/atom.svg"></img></i><span id="spiritualMsg">Religion</span><img
+                    src="img/icons/church.svg"></img>
                 <input type="range" min="-100" max="100" value="0" class="spiritual" id="spiritualSlider">
             </div>
             <div class="question">
-                <i data-feather="arrow-left"></i><span id="politicsMsg">Politics</span><i
-                    data-feather="arrow-right"></i>
+                <img src="img/icons/democrat.svg"></img><span id="politicsMsg">Politics</span><img
+                    src="img/icons/republican.svg"></img>
                 <input type="range" min="-100" max="100" value="0" class="politics" id="politicsSlider">
             </div>
             <button id="skipQuiz" class="btn btn-secondary close-quiz">Skip</button>
@@ -301,8 +305,10 @@
                         <div class="col-6 col-md-3">
                             <div class="highlight-card p-3">
                                 <h5>Languages</h5>
-                                <p>2000+ day <a id="duo-link" href="https://www.duolingo.com/profile/mattghall"
-                                        target="_blank>"><img src="img/duolingo.svg" alt="" duolingo></a> streak 🇪🇸
+                                <p>2000+ day <a color="#58CC02" href="https://www.duolingo.com/profile/mattghall"
+                                        target="_blank>"><img class="inline-img" src="img/icons/duolingo.svg" alt=""
+                                            duolingo></a> streak
+                                    <img class="inline-img" src="img/icons/spain.webp" alt="Spanish">
                                 </p>
                             </div>
                         </div>
@@ -353,7 +359,7 @@
                     <div class="col-12">
                         <h2 class="text-center w-100 mb-2">My fur-baby, Milly</h2>
                     </div>
-                    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+                    <div id="millyCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div style="background-image: url(img/milly/milly-1.jpg); background-position-y: 30%;"
@@ -384,12 +390,12 @@
                                     class="d-block w-100" alt="milly"></div>
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                        <button class="carousel-control-prev" type="button" data-bs-target="#millyCarousel"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
                         </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                        <button class="carousel-control-next" type="button" data-bs-target="#millyCarousel"
                             data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
@@ -422,7 +428,7 @@
                     <div class="letterboxd-container">
                         <div class="letterboxd-logo">
                             <a href="https://letterboxd.com/mattghall/" target="_blank">
-                                <img src="img/letterboxd-logo.svg" alt="Letterboxd">
+                                <img src="img/icons/letterboxd-logo.svg" alt="Letterboxd">
                             </a>
                         </div>
                         <div class="corner-logo">
