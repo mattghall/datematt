@@ -1,5 +1,5 @@
 function passFailQuiz(force) {
-    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 34 || $("#pets1Slider").val() <= -60) {
+    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 75 || $("#pets1Slider").val() <= -60) {
         $("#quiz").css("transition", "ease-in-out 5s")
         $("#submitQuiz, #skipQuiz").remove();
         $("#submit").remove();
@@ -201,7 +201,6 @@ function submitQuiz() {
                     break;
                 default:
             }
-            difference
             var matchPerent = difference > 100 ? 0 : 100 - Math.floor(difference);
             resultMap[sliders[i]] = matchPerent;
             slider.addClass("hideThumb")
@@ -227,26 +226,27 @@ function totalMatchPercent() {
     }
     var total = Math.ceil(total / count);
     if (resultMap["spiritual"] >= 0) {
-        if ($("#spiritualSlider").val() > 34) {
-            return 0;
-        } else if (resultMap["spiritual"] < 60) {
-            total = total * .75;
-        } else if (resultMap["spiritual"] < 40) {
-            total = total * .50;
+        var spiritVal = $("#spiritualSlider").val();
+        if (spiritVal > 75) {
+            total = total * .15;
+        } else if (spiritVal > 35) {
+            total = total * .30;
+        } else if (spiritVal > 0) {
+            total = total * .70;
         }
     }
     if (resultMap["politics"] >= 0) {
         if ($("#politicsSlider").val() > 19) {
             return 0;
         }
-        if (resultMap["politics"] < 70) {
-            total = total * .50;
+        if ($("#politicsSlider").val() > 0) {
+            total = total * .20;
         }
     }
     if (!total) {
         return 0;
     }
-    return total;
+    return Math.floor(total);
 }
 
 function rickRollBuilder() {
