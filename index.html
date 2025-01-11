@@ -42,6 +42,25 @@
 
     <script>
         $(document).ready(function () {
+            // Get local storage
+            if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
+                console.log("Running locally");
+            }
+            let siteVisit = localStorage.getItem("quizStats");
+            if (siteVisit) {
+                quizStats = JSON.parse(siteVisit);
+                quizStats['visits'] = Number(quizStats['visits']) + 1;
+                if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
+                    quizStats['testing'] = true;
+                }
+                if (quizStats["signOut"] === false) {
+                    welcomeBack();
+                } else {
+                    console.log("Repeat user who signed out");
+                }
+            } else {
+                initQuizStats();
+            }
             $("#submitQuiz").click(function () {
                 submitQuiz();
             });
@@ -51,8 +70,14 @@
             $("#continueQuiz").click(function () {
                 passQuiz();
             });
+            $("#sign-out").click(function () {
+                signOut();
+            });
             $("input[type=range]").on("input change", function (e) {
                 sliderChange(e.target.id, e.target.value);
+            });
+            $("input[type=range]").on("change", function (e) {
+                quizStats['path'][e.target.id][new Date().toISOString()] = e.target.value;
             });
             $('#load-more-movies').click(loadMovies);
             $('.fold-me').click(function (e) {
@@ -152,10 +177,13 @@
             <img src="img/favicon/android-chrome-512x512.png" alt="Profile photo" class="profile-photo">
             <h1 class="display-4">Matt Hall</h1>
             <p>Runner, Adventurer, Milly's Human</p>
+            <div class="corner-logo">
+                <img id="sign-out" src="img/icons/sign-out.svg" alt="Sign Out" style="width: 25px; height: 25px;">
+            </div>
         </header>
 
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-            <div class="instagram-container">
+            <div class="secret-card">
                 <div class="fold-me why">
                     <i class="down" data-feather="chevron-down"></i>
                     <i class="up" data-feather="chevron-up"></i>
@@ -210,7 +238,7 @@
 
                 <!-- Instagram div -->
                 <div class="col-12">
-                    <div class="instagram-container">
+                    <div class="secret-card">
                         <div class="corner-logo">
                             <a href="https://www.instagram.com/mattghall/" target="_blank">
                                 <a href="https://www.instagram.com/mattghall/" target="_blank">
@@ -461,7 +489,7 @@
         <!-- Footer -->
         <div id="footer-row" class="row justify-content-center bg-dark text-white">
             <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-                datematt.com - <span class="version-span">1.1</span>
+                datematt.com - <span class="version-span">1.2</span>
             </div>
             <div class="social text-center col-12 px-1 px-md-2 pb-1">
                 <div>

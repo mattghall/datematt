@@ -1,3 +1,42 @@
+const lamdaUrl = "https://6heos86veh.execute-api.us-west-2.amazonaws.com/default/games?route=dating";
+
+var quizStats;
+
+function initQuizStats() {
+    console.log("first time visitor");
+    quizStats = {};
+    quizStats['visits'] = 1;
+    quizStats['signOut'] = false;
+    quizStats['final'] = {};
+    quizStats['path'] = {
+        'natureSlider': {},
+        'sportsSlider': {},
+        'pets1Slider': {},
+        'pets2Slider': {},
+        'spiritualSlider': {},
+        'politicsSlider': {}
+    };
+    if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
+        quizStats['testing'] = true;
+    }
+}
+
+function signOut() {
+    quizStats['signOut'] = true;
+    localStorage.setItem("quizStats", JSON.stringify(quizStats));
+    location.reload();
+}
+
+function welcomeBack() {
+    $(".question, #tab1 button").hide();
+    $("#tab1 h2").css("transition", "none");
+    $("#tab1 h2").text("Welcome Back! " + quizStats['overall'] + "% Match");
+    $("#tab1 h2").css("color", "blue");
+    $("#tab1 h2").css("font-weight", "bolder");
+    passQuiz();
+    localStorage.setItem("quizStats", JSON.stringify(quizStats));
+}
+
 function passFailQuiz(force) {
     if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 75 || $("#pets1Slider").val() <= -60) {
         $("#quiz").css("transition", "ease-in-out 5s")
@@ -5,13 +44,18 @@ function passFailQuiz(force) {
         $("#submit").remove();
         $("#tab1 h2").text("Uh oh... " + totalMatchPercent() + "% Match");
         $("#tab1 h2").css("color", "red");
+        quizStats['signOut'] = true;
         setTimeout(() => {
             failQuiz();
         }, 2000);
     } else {
         if (force) {
+            quizStats['signOut'] = true;
+            postData(true);
             passQuiz();
             return;
+        } else {
+            quizStats['signOut'] = false;
         }
         $("#tab1 h2").text("It's a Match! " + totalMatchPercent() + "%")
         $("#tab1 h2").css("color", "blue");
@@ -27,8 +71,41 @@ function passQuiz() {
     $("html").css("overflow", "auto");
     setTimeout(() => {
         $("#quiz").remove();
-    }, 3000);
+    }, 2000);
 }
+
+function postData(skip) {
+    let now = new Date().toISOString();
+    let total = totalMatchPercent();
+
+    quizStats['final'][now] = {};
+    if (!skip) {
+        quizStats['final'][now]['overall'] = total;
+        quizStats['overall'] = total;
+    } else {
+        quizStats['final'][now]['skip'] = true;
+    }
+
+    for (var i = 0; i < sliders.length; i++) {
+        var slider = $("#" + sliders[i] + "Slider");
+        var result = Number(slider.val());
+        quizStats['final'][now][sliders[i]] = result;
+    }
+
+    fetch(lamdaUrl, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(quizStats),
+    }).then(res => {
+        console.log("Status Code: ", res.status);
+        localStorage.setItem("quizStats", JSON.stringify(quizStats));
+        return res.json();
+    });
+}
+
 
 // background: linear-gradient(to right, #9c0000 50%, #4b78ca 55%, #00ac09 100%);
 function gradientBuilder(gradientList) {
@@ -129,11 +206,13 @@ function initResultMap() {
     };
 }
 
+const sliders = ["nature", "sports", "pets1", "pets2", "spiritual", "politics"];
+
+
 function submitQuiz() {
     $("#submitQuiz").attr("disabled", "true");
     $("input[type='range']").attr("disabled");
     $("#tab1 h2").text("Results")
-    var sliders = ["nature", "sports", "pets1", "pets2", "spiritual", "politics"];
     var sliderTitles = ["Nature", "Sports", "Pets", "Cats", "Religion", "Politics"];
     var mattVal = [85, 70, 70, 35, -90, -90];
     for (var i = 0; i < sliders.length; i++) {
@@ -209,6 +288,7 @@ function submitQuiz() {
             slider.css("background", setBackground(slider.val(), mattVal[i], difference));
             if (i == sliders.length - 1) {
                 passFailQuiz();
+                postData();
             }
         }, i * 500, i);
     }

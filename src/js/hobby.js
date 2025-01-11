@@ -59,7 +59,7 @@ function buildHobbyCards() {
         "size": "cover",
         "position": "50%",
         "alt": ["On my motorcycle", "Sorority girl pose on my motorcycle"],
-        "description": "Can't keep me off two wheels. Not the safest hobby but it's a blast and I look cool doing it."
+        "description": "Not the safest hobby but it's a blast and I look cool doing it. Always ride with full safety gear!"
     }, {
         "title": "Community",
         "src": ["img/matt/electric-cookie.jpg"],

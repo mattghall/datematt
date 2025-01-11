@@ -1,4 +1,4 @@
-.instagram-container {
+.secret-card {
     max-width: 540px;
     margin: 0 auto;
     border: 1px solid #dbdbdb;
@@ -48,7 +48,7 @@
     font-weight: bold;
 }
 
-.instagram-container button {
+.secret-card button {
     width: 100%;
     border-radius: 15px;
 }
@@ -70,18 +70,18 @@
     display: none;
 }
 
-.instagram-container {
+.secret-card {
     position: relative;
     min-width: 330px;
 }
 
 @media screen and (min-width: 768px) {
-    .instagram-container {
+    .secret-card {
         width: 100%;
         max-width: 1400px;
     }
 
-    .instagram-container .fold-me {
+    .secret-card .fold-me {
         display: none;
     }
 
