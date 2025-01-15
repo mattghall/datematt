@@ -5,8 +5,9 @@ var quizStats;
 function initQuizStats() {
     console.log("first time visitor");
     quizStats = {};
+    quizStats['id'] = crypto.randomUUID();
     quizStats['visits'] = 1;
-    quizStats['signOut'] = false;
+    quizStats['signOut'] = true;
     quizStats['final'] = {};
     quizStats['path'] = {
         'natureSlider': {},
@@ -19,6 +20,7 @@ function initQuizStats() {
     if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
         quizStats['testing'] = true;
     }
+    localStorage.setItem("quizStats", JSON.stringify(quizStats));
 }
 
 function signOut() {

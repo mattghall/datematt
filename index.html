@@ -58,6 +58,10 @@
                 } else {
                     console.log("Repeat user who signed out");
                 }
+                if (!quizStats['id']) {
+                    quizStats['id'] = crypto.randomUUID();
+                    localStorage.setItem("quizStats", JSON.stringify(quizStats));
+                }
             } else {
                 initQuizStats();
             }
@@ -201,7 +205,7 @@
                         because people live under the illusion of an unlimited queue of perfect partners just one
                         swipe
                         away.
-                        So how do you meet people without dating apps? Well, I haven't quite figured that out yes so
+                        So how do you meet people without dating apps? Well, I haven't quite figured that out yet so
                         I
                         decided to
                         do what I know best; make a silly website. Specifically one to advertise myself to potential
@@ -326,12 +330,6 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="highlight-card p-3">
-                                <h5>Travel</h5>
-                                <p>When are we booking our next trip to Europe?</p>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <div class="highlight-card p-3">
                                 <h5>Languages</h5>
                                 <p>2000+ day <a color="#58CC02" href="https://www.duolingo.com/profile/mattghall"
                                         target="_blank>"><img class="inline-img" src="img/icons/duolingo.svg" alt=""
@@ -342,8 +340,15 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="highlight-card p-3">
-                                <h5>Motorcycles</h5>
-                                <p>Experienced motorcycle rider with a passion for the open road.</p>
+                                <h5>Musical</h5>
+                                <p>Enjoys playing guitar, singing, and jamming to favorite tunes.</p>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="highlight-card p-3">
+                                <h5>Volleyball</h5>
+                                <p>Rec league MVP volleyball player. Find me bump, set, and spiling my way to the
+                                    midcore championship game where we inevitably blow it.</p>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
@@ -355,20 +360,8 @@
                         </div>
                         <div class="col-6 col-md-3">
                             <div class="highlight-card p-3">
-                                <h5>Musical</h5>
-                                <p>Enjoys playing guitar, singing, and jamming to favorite tunes.</p>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <div class="highlight-card p-3">
                                 <h5>Volunteering</h5>
                                 <p>Regular volunteer at local races, supporting the running community.</p>
-                            </div>
-                        </div>
-                        <div class="col-6 col-md-3">
-                            <div class="highlight-card p-3">
-                                <h5>Pet Dad</h5>
-                                <p>Devoted pet dad, always ensuring the best care for furry friends.</p>
                             </div>
                         </div>
                         <div class="col-6 col-md-3">
@@ -469,19 +462,20 @@
                 <!-- References div -->
                 <div class="col-12 my-2">
                     <h2 class="text-center mb-4">References</h2>
-
                     <blockquote class="blockquote text-center">
-                        <p class="mb-0">"I'll take anyone at this point"</p>
-                        <footer class="blockquote-footer">Matt's Mom</footer>
-                    </blockquote>
-                    <blockquote class="blockquote text-center">
-                        <p class="mb-0">"His cat is adorable"</p>
-                        <footer class="blockquote-footer">Matt's friend Sarah</footer>
-                    </blockquote>
-                    <blockquote class="blockquote text-center">
-                        <p class="mb-0">"No I'm not going to be a reference for your dating website"</p>
-                        <footer class="blockquote-footer">Previous Parter</footer>
-                    </blockquote>
+                        <p class="mb-0">"Matt makes his health and mental health a priority. While he does not like to
+                            admit it, Matt is an extremely caring and loyal person who prioritizes people, honesty, and
+                            social justice. He will definitely use humor as a defense mechanism and avoid yoga at almost
+                            all costs. "</p>
+                        <footer class="blockquote-footer">Matt's Therapist</footer>
+                        <blockquote class="blockquote text-center">
+                            <p class="mb-0">"His cat is adorable"</p>
+                            <footer class="blockquote-footer">Matt's friend Sarah</footer>
+                        </blockquote>
+                        <blockquote class="blockquote text-center">
+                            <p class="mb-0">"No I'm not going to be a reference for your dating website"</p>
+                            <footer class="blockquote-footer">Previous Partner</footer>
+                        </blockquote>
                 </div>
             </div>
         </div>
@@ -489,7 +483,7 @@
         <!-- Footer -->
         <div id="footer-row" class="row justify-content-center bg-dark text-white">
             <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-                datematt.com - <span class="version-span">1.2</span>
+                datematt.com - <span class="version-span">1.3</span>
             </div>
             <div class="social text-center col-12 px-1 px-md-2 pb-1">
                 <div>
