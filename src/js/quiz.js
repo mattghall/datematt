@@ -32,7 +32,13 @@ function signOut() {
 function welcomeBack() {
     $(".question, #tab1 button").hide();
     $("#tab1 h2").css("transition", "none");
-    $("#tab1 h2").text("Welcome Back! " + quizStats['overall'] + "% Match");
+    if (quizStats['name']) {
+        $("#tab1 h2").text("Welcome Back " + quizStats['name'] + "!");
+    } else if (quizStats['overall']) {
+        $("#tab1 h2").text("Welcome Back! " + quizStats['overall'] + "% Match");
+    } else {
+        $("#tab1 h2").text("Welcome Back!");
+    }
     $("#tab1 h2").css("color", "blue");
     $("#tab1 h2").css("font-weight", "bolder");
     passQuiz();
@@ -134,6 +140,7 @@ function setBackground(match, matt, difference) {
     var white = "white";
 
     if (difference > 80) {
+        lighterColor = "#ff7676";
         lighterColor = "#ff7676";
         darkerColor = "red";
     } else if (difference > 60) {

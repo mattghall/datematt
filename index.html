@@ -90,6 +90,10 @@
             $('.hobby-cards').on('click', '.next, .last', cardNavClick);
             $('.hobby-cards').on('click', '.expand, .shrink', expandHobbyImg);
 
+            $('.chat-avatar').click(function () {
+                $('.chat-window').toggleClass('open');
+            });
+
             initResultMap()
             loadMovies();
             buildHobbyCards();
@@ -185,6 +189,50 @@
                 <img id="sign-out" src="img/icons/sign-out.svg" alt="Sign Out" style="width: 25px; height: 25px;">
             </div>
         </header>
+
+        <link rel="stylesheet" href="src/style/chat.css">
+        <script src="src/js/chat.js"></script>
+
+        <div class="chat-window open">
+            <div class="chats">
+                <!-- 
+                <div class="chat-entry prompt">
+                    <div class="chat-bubble d-flex align-items-center">
+                        <p class="mb-0">Like what you see?</p>
+                    </div>
+                </div>
+                <div class="chat-entry response">
+                    <div class="chat-bubble d-flex align-items-center justify-content-between">
+                        <button class="btn btn-primary mx-1">Yes</button>
+                        <button class="btn btn-danger mx-1">No</button>
+                    </div>
+                </div>
+
+                <div class="chat-entry response">
+                    <div class="chat-bubble d-flex align-items-center">
+                        <p class="mb-0">Yes</p>
+                    </div>
+                </div> 
+                <div class="chat-entry prompt pic">
+                    <div class="chat-bubble pic">
+                        <img src="img/instagram/insta-01.jpg" alt="Profile photo">
+                    </div>
+                </div>
+                
+                <div class="chat-entry response">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="name" aria-label="name">
+                        <button class="btn btn-primary" type="button">✓</button>
+                    </div>
+                </div>
+                
+                -->
+            </div>
+
+            <div class="chat-avatar">
+                <img class="hidden" src="img/favicon/android-chrome-512x512.png" alt="Profile photo">
+            </div>
+        </div>
 
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
             <div class="secret-card">
