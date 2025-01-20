@@ -1,14 +1,45 @@
 var questionTree = [];
 
-function startChat() {
+function initChat() {
     $(".chat-window").css("display", "flex");
     questionTree = ["start"];
+    if (!quizStats['path']['chat']) {
+        quizStats['path']['chat'] = [];
+    }
+    quizStats['path']['chat'].push({ type: 'info', msg: 'start' })
     setTimeout(() => {
         $('.chat-avatar img').removeClass('hidden');
         setTimeout(() => {
-            askQuestion('Like what you see?', 'Yes', 'No');
+            startChatTree();
         }, 2000);
     }, 2000);
+}
+
+function startChatTree() {
+    var msg = "Hi";
+    if (quizStats['name']) {
+        msg += " " + quizStats['name'];
+    }
+    msg += "! Thanks for visiting";
+    if (quizStats['visits'] > 1) {
+        msg = msg + " again."
+    }
+    chat(msg, 'prompt');
+    msg = "";
+    if (quizStats['interested'] && quizStats['interested'] === "yes") {
+        if (quizStats['contact']) {
+            msg = 'Have I reached out to you yet?';
+        } else {
+            chat("It appears I never got your contact info. Let's fix that.", 'prompt');
+            askDelayedQuestion('How can I get in touch with you?', 'Text', 'Instagram', 'Other');
+            return;
+        }
+    } else if (quizStats['interested']) {
+        msg = 'Are you interested in connecting?'
+    } else {
+        msg = 'Like what you see?';
+    }
+    askDelayedQuestion(msg, 'Yes', 'No');
 }
 
 function toTitleCase(str) {
@@ -31,6 +62,7 @@ function askInputQuestion(question, placeholder) {
 }
 
 function reachOutSoon() {
+    postData();
     delayedChat('I\'ll be sure to reach out soon!', 'prompt');
     setTimeout(() => {
         chat('In the meantime, feel free to explore the site.', 'prompt');
@@ -70,6 +102,7 @@ function chat(msg, type) {
     chatBubble.append(chatText);
     chatEntry.append(chatBubble);
     $('.chats').append(chatEntry);
+    quizStats['path']['chat'].push({ type: type, msg: msg });
     console.log(type + ": " + msg);
 }
 
@@ -126,23 +159,28 @@ function answerQuestion(answer) {
             } else {
                 chat("That's too bad.", 'prompt');
                 // resolved
-                askDelayedQuestion('Is it ME or the website?', 'Matt', 'Website', 'This chat');
+                askDelayedQuestion('Is it ME or the website?', 'You (Matt)', 'Website', 'This chat');
             }
             break;
         }
-        case "Great! Are you interested in connecting?": {
+        case "Great! Are you interested in connecting?":
+        case "Are you interested in connecting?": {
             if (answer === 'Yes') {
                 chat("Awesome!", "prompt");
+                quizStats['interested'] = "yes";
                 // resolved
                 askInputQuestion('What is your name?', 'Name');
             } else if (answer === 'Maybe') {
+                quizStats['interested'] = "maybe";
                 // resolved
                 askDelayedQuestion('Do you have any questions for me?', 'Yes', 'No');
             } else {
-                chat('That\'s too bad.', 'prompt');
+                chat("That's too bad.", 'prompt');
+                quizStats['interested'] = "no";
                 // resolved
-                askDelayedQuestion('Is it ME or the website?', 'Matt', 'Website', 'This chat');
+                askDelayedQuestion('Is it ME or the website?', 'You (Matt)', 'Website', 'This chat');
             }
+            postData();
             break;
         }
         case "What is your name?": {
@@ -157,6 +195,8 @@ function answerQuestion(answer) {
             if (!quizStats['contact']) {
                 quizStats['contact'] = {};
             }
+            quizStats['contact']['time'] = new Date().toISOString();
+
             if (answer === 'Text') {
                 // resolved
                 askInputQuestion('What is your phone number?', 'Phone Number');
@@ -174,30 +214,26 @@ function answerQuestion(answer) {
         }
         case "What is your phone number?": {
             quizStats['contact']['phone'] = answer;
-            postData();
             reachOutSoon();
             break;
         }
         case "What is your Instagram?": {
             quizStats['contact']['instagram'] = answer;
-            postData();
             reachOutSoon();
             break;
         }
         case "What is your email?": {
             quizStats['contact']['email'] = answer;
-            postData();
             reachOutSoon();
             break;
         }
         case "How can I reach you?": {
             quizStats['contact']['other'] = answer;
-            postData();
             reachOutSoon();
             break;
         }
         case "Is it ME or the website?": {
-            if (answer === 'Matt') {
+            if (answer === 'Matt' || answer === 'You (Matt)') {
                 setTimeout(() => {
                     $("#rejection h1").text("I guess we're not the best match.");
                     askQuestion('Would you say that I gave you up?', 'Huh?');
@@ -213,19 +249,25 @@ function answerQuestion(answer) {
                     'What is this AI chat thing?', 'What does this button do?');
             } else if (answer === 'This chat') {
                 setTimeout(() => {
-                    chat('Oh I\'m not real.', 'prompt');
+                    chat("Would it make you feel better if I said I'm not real?", 'prompt');
                     // resolved
-                    askDelayedQuestion("Well I'm real but these are just pre-written messages like a choose your own adventure book",
+                    askDelayedQuestion("Well I'm real, but these are just pre-written messages... kind of like a choose your own adventure book",
                         "So you're NOT AI?");
                 }, 1000);
             }
             break;
         }
         case "Yeah I could see how that might be a bit too intense for someone.":
-        case "Well I'm real but these are just pre-written messages like a choose your own adventure book":
+        case "Well I'm real, but these are just pre-written messages... kind of like a choose your own adventure book":
         case "What would you like to know?": {
             if (answer === 'What is this AI chat thing?') {
-                chat('I\'m AI in the same way that a light switch is AI', 'prompt');
+                chat("Oh I'm not AI, just a nested if tree. I'm AI in the same way that a light switch is AI", 'prompt');
+                setTimeout(() => {
+                    chatImg("img/chat/isitai.jpg", "prompt");
+                    delayedChat('You can click my face to minimize the chat btw.');
+                }, 1000);
+            } if (answer === "So you're NOT AI?") {
+                chat("No, I'm just a nested if tree. I'm AI in the same way that a light switch is AI", 'prompt');
                 setTimeout(() => {
                     chatImg("img/chat/isitai.jpg", "prompt");
                     delayedChat('You can click my face to minimize the chat btw.');
@@ -237,16 +279,62 @@ function answerQuestion(answer) {
                         failQuiz();
                     }, 2000);
                 }, 1000);
+            } else if (answer === 'other') {
+                askInputQuestion('What else would you like to know?', 'Question');
             }
             break;
         }
         case "Do you have any questions for me?": {
             if (answer === 'Yes') {
                 // resolved
-                askDelayedQuestion('What would you like to know?', 'What is this AI chat thing?', 'What does this button do?');
+                askDelayedQuestion('What would you like to know?', 'What is this AI chat thing?', 'What does this button do?', 'other');
             } else {
                 chat('OK, then.', 'prompt');
                 delayedChat('You can click my face to minimize the chat btw.');
+            }
+            break;
+        }
+        case "What else would you like to know?": {
+            if (!quizStats['questions']) {
+                quizStats['questions'] = [];
+            }
+            quizStats['questions'].push(answer);
+            chat("Great question! Let me get your contact info so I can get an answer to you?", 'prompt');
+            postData();
+        }
+        case "Great question! Let me get your contact info so I can get an answer to you?": {
+            // resolved
+            askQuestion('How can I get in touch with you?', 'Text', 'Instagram', 'Other');
+            break;
+        }
+        case "Have I reached out to you yet?": {
+            if (answer === 'Yes') {
+                chat("Great!", "prompt");
+                delayedChat('You can click my face to minimize the chat btw.', 'prompt');
+            } else {
+                setTimeout(() => {
+                    let difference = new Date() - new Date(quizStats['contact']['time'])
+                    // if it's been less than 36hrs
+                    if (difference < 1000 * 60 * 60 * 36) {
+                        var time = "";
+                        if (difference < 1000) {
+                            time = difference / 1000 + " seconds";
+                        } else if (difference < (1000 * 60)) {
+                            time = difference / (1000 * 60) + " minutes";
+                        } else if (difference < (1000 * 60 * 60)) {
+                            time = difference / (1000 * 60 * 60) + " hours";
+                        }
+                        chat("Looks like you only sent me your contact info " + time + " ago. I'll be sure to reach out soon!", "prompt");
+                    } else {
+                        chat("Oops! I must be busy backpacking or running or volunteering at the animal shelter or something. I'll be sure to reach out soon!", "prompt");
+                    }
+                    setTimeout(() => {
+                        chat('In the meantime, feel free to explore the site.', 'prompt');
+                        setTimeout(() => {
+                            chat('You can click my face to minimize the chat btw.', 'prompt');
+                        }, 1000);
+                    }, 2000);
+                }, 2000);
             }
             break;
         }

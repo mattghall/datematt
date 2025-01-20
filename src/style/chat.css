@@ -62,10 +62,6 @@
     justify-content: flex-end;
 }
 
-.chat-bubble input {
-    text-transform: capitalize;
-}
-
 .chat-bubble {
     position: relative;
     background: #218aff;
@@ -86,6 +82,7 @@
 .chat-bubble img {
     width: 100%;
     border-radius: 6px;
+    max-height: 300px;
 }
 
 .prompt .chat-bubble::before {

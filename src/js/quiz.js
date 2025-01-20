@@ -15,7 +15,8 @@ function initQuizStats() {
         'pets1Slider': {},
         'pets2Slider': {},
         'spiritualSlider': {},
-        'politicsSlider': {}
+        'politicsSlider': {},
+        'chat': []
     };
     if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
         quizStats['testing'] = true;
@@ -39,6 +40,9 @@ function welcomeBack() {
     } else {
         $("#tab1 h2").text("Welcome Back!");
     }
+    if (!quizStats['path']['chat']) {
+        quizStats['path']['chat'] = [];
+    }
     $("#tab1 h2").css("color", "blue");
     $("#tab1 h2").css("font-weight", "bolder");
     passQuiz();
@@ -59,7 +63,7 @@ function passFailQuiz(force) {
     } else {
         if (force) {
             quizStats['signOut'] = true;
-            postData(true);
+            postQuizData(true);
             passQuiz();
             return;
         } else {
@@ -74,15 +78,17 @@ function passFailQuiz(force) {
 }
 
 function passQuiz() {
-    $("#rickRoll, #rejection").remove();
     $("#quiz").css("opacity", "0%");
     $("html").css("overflow", "auto");
     setTimeout(() => {
         $("#quiz").remove();
+        setTimeout(() => {
+            initChat();
+        }, 5000);
     }, 2000);
 }
 
-function postData(skip) {
+function postQuizData(skip) {
     let now = new Date().toISOString();
     let total = totalMatchPercent();
 
@@ -99,7 +105,11 @@ function postData(skip) {
         var result = Number(slider.val());
         quizStats['final'][now][sliders[i]] = result;
     }
+    postData();
+}
 
+function postData() {
+    localStorage.setItem("quizStats", JSON.stringify(quizStats));
     fetch(lamdaUrl, {
         method: 'POST',
         headers: {
@@ -113,7 +123,6 @@ function postData(skip) {
         return res.json();
     });
 }
-
 
 // background: linear-gradient(to right, #9c0000 50%, #4b78ca 55%, #00ac09 100%);
 function gradientBuilder(gradientList) {
@@ -297,7 +306,7 @@ function submitQuiz() {
             slider.css("background", setBackground(slider.val(), mattVal[i], difference));
             if (i == sliders.length - 1) {
                 passFailQuiz();
-                postData();
+                postQuizData();
             }
         }, i * 500, i);
     }
