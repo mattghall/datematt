@@ -1,5 +1,5 @@
 const lamdaUrl = "https://6heos86veh.execute-api.us-west-2.amazonaws.com/default/games?route=dating";
-
+const NAME = "name";
 var quizStats;
 
 function initQuizStats() {
@@ -16,6 +16,7 @@ function initQuizStats() {
         'pets2Slider': {},
         'spiritualSlider': {},
         'politicsSlider': {},
+        'name': [],
         'chat': []
     };
     if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
@@ -26,6 +27,21 @@ function initQuizStats() {
 
 function signOut() {
     quizStats['signOut'] = true;
+    if (!quizStats['history']) {
+        quizStats['history'] = {};
+    }
+    var history = {};
+    history['date'] = new Date().toISOString();
+    history[NAME] = quizStats[NAME];
+    history['contact'] = quizStats['contact'];
+    history['interested'] = quizStats['interested'];
+    history['chat'] = quizStats['path']['chat'];
+
+    quizStats['history'][new Date().toISOString()] = history;
+    quizStats['path']['chat'] = [];
+    quizStats[NAME] = null;
+    quizStats['contact'] = null;
+    quizStats['interested'] = null;
     localStorage.setItem("quizStats", JSON.stringify(quizStats));
     location.reload();
 }
@@ -33,8 +49,8 @@ function signOut() {
 function welcomeBack() {
     $(".question, #tab1 button").hide();
     $("#tab1 h2").css("transition", "none");
-    if (quizStats['name']) {
-        $("#tab1 h2").text("Welcome Back " + quizStats['name'] + "!");
+    if (quizStats[NAME]) {
+        $("#tab1 h2").text("Welcome Back " + quizStats[NAME] + "!");
     } else if (quizStats['overall']) {
         $("#tab1 h2").text("Welcome Back! " + quizStats['overall'] + "% Match");
     } else {
@@ -50,7 +66,7 @@ function welcomeBack() {
 }
 
 function passFailQuiz(force) {
-    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 75 || $("#pets1Slider").val() <= -60) {
+    if ($("#politicsSlider").val() >= 20 || $("#spiritualSlider").val() > 75) {
         $("#quiz").css("transition", "ease-in-out 5s")
         $("#submitQuiz, #skipQuiz").remove();
         $("#submit").remove();
@@ -233,6 +249,10 @@ function submitQuiz() {
     $("#tab1 h2").text("Results")
     var sliderTitles = ["Nature", "Sports", "Pets", "Cats", "Religion", "Politics"];
     var mattVal = [85, 70, 70, 35, -90, -90];
+    var nameName = $("#nameInput").val();
+    if (nameName && nameName != "") {
+        quizStats[NAME] = nameName;
+    }
     for (var i = 0; i < sliders.length; i++) {
         setTimeout(function (i) {
             var slider = $("#" + sliders[i] + "Slider");
@@ -477,22 +497,22 @@ function sliderChange(slider, val) {
             $("#spiritualMsg").text("Religon is a very big part of my life");
         } else if (val > 35) {
             $("#spiritualMsg").text("I consider myself religous");
-        } else if (val > 15) {
+        } else if (val > 5) {
             $("#spiritualMsg").text("I'm somewhat religous");
         } else if (val > -20) {
             $("#spiritualMsg").text("I more spiritual than religous");
         } else if (val > -50) {
             $("#spiritualMsg").text("I'm not very religous");
         } else if (val > -70) {
-            $("#spiritualMsg").text("I'm not religous, but respect others' beliefs");
+            $("#spiritualMsg").text("I'm not religous");
         } else if (val > -85) {
-            $("#spiritualMsg").text("Religous people are crazy");
+            $("#spiritualMsg").text("I'm anti-religion");
         } else {
-            $("#spiritualMsg").text("I see no difference between religon and cults");
+            $("#spiritualMsg").text("I hate religious people");
         }
     } else if (slider == "politicsSlider") {
         if (val > 90) {
-            $("#politicsMsg").text("Heil Trump and the new third reich");
+            $("#politicsMsg").text("Heil Führer Trump");
         } else if (val > 50) {
             $("#politicsMsg").text("I am very conservative");
         } else if (val > 20) {
@@ -506,7 +526,8 @@ function sliderChange(slider, val) {
         } else if (val > -90) {
             $("#politicsMsg").text("I am very progressive");
         } else {
-            $("#politicsMsg").text("Let's seize the means of production");
+            $("#politicsMsg").text("I'm extremely progressive");
         }
     }
+    $("#submitQuiz").prop("disabled", false);
 }

@@ -31,7 +31,7 @@ function buildHobbyCards() {
         "size": "cover",
         "position": "50%",
         "alt": ["Finishing a section of the PCT", "Last mile after weekend backpacking the Enchantments", "hiking through a snowfield", "Glacier National Park"],
-        "description": "I've hiked over 600 miles on the PCT and have plans to finish the trail someday."
+        "description": "I've hiked over 600 miles on the PCT and have plans to finish the trail someday. Checkout my trip at <a href='https://trailmatt.com/' target='_blank'>trailmatt.com</a>"
     }, {
         "title": "Crafting",
         "src": ["img/matt/halloween.jpg"],
@@ -117,7 +117,7 @@ function buildHobbyCards() {
 
         const cardBody = $('<div></div>').addClass('card-body');
         const cardTitle = $('<h5></h5>').addClass('card-title').text(hobby.title);
-        const cardText = $('<p></p>').addClass('card-text').text(hobby.description);
+        const cardText = $('<p></p>').addClass('card-text').html(hobby.description);
 
         cardBody.append(cardTitle).append(cardText);
         for (img of images) {

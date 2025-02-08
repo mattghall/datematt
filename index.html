@@ -24,9 +24,6 @@
     <meta name="twitter:description" content="Date Matt." />
     <meta name="twitter:image" content="https://datematt.com/img/favicon/og-image.jpg" />
 
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-
     <script src="dep/jquery-3.7.1.min.js"></script>
 
     <link href="dep/bootstrap-5.3.3.min.css" rel="stylesheet">
@@ -39,6 +36,8 @@
     <script src="dist/js/quiz.js"></script>
     <script src="dist/js/movies.js"></script>
     <script src="dist/js/hobby.js"></script>
+    <script src="dist/js/chatTree.js"></script>
+    <script src="dist/js/chat.js"></script>
 
     <script>
         $(document).ready(function () {
@@ -91,8 +90,43 @@
             $('.hobby-cards').on('click', '.expand, .shrink', expandHobbyImg);
 
             $('.chat-avatar').click(function () {
+                toggleChat();
+            });
+
+            function toggleChat(forceClose = false) {
+                if (forceClose || $('.chat-window').hasClass('open')) {
+                    postData();
+                    $(".chat-bubble button").prop("disabled", true);
+                    $(".chat-bubble button").css("background-color", "gray");
+                    $(".chat-entry, .chat-bubble").css("opacity", 0.8)
+                } else {
+                    startChatTree();
+                }
                 $('.chat-window').toggleClass('open');
-                postData();
+            }
+
+            var namePath = [];
+
+            $("#nameInput").on("focusout", function () {
+                quizStats[NAME] = $("#nameInput").val();
+                if (!quizStats['path'].hasOwnProperty(NAME)) {
+                    quizStats['path'][NAME] = [];
+                }
+                namePath.push($("#nameInput").val());
+                quizStats['path'][NAME] = namePath;
+            });
+
+            let el = document.getElementById('nameInput');
+            var lastKeyBack = false;
+            el.addEventListener('keydown', function (event) {
+                // Checking for Backspace. 
+                // 8 = backspace, 46 = delete, 13 = enter, 9 = tab, 189 = minus
+                if (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13 || event.keyCode == 9 || event.keyCode == 189) {
+                    if (lastKeyBack == false && $("#nameInput").val() != "") {
+                        namePath.push($("#nameInput").val());
+                    }
+                    lastKeyBack = true;
+                }
             });
 
             initResultMap()
@@ -102,7 +136,6 @@
             setTimeout(() => loadMovies(), 2000);
 
         });
-
 
         function foldFunction(e) {
             var targetClass = "";
@@ -157,8 +190,11 @@
                     src="img/icons/republican.svg"></img>
                 <input type="range" min="-100" max="100" value="0" class="politics" id="politicsSlider">
             </div>
-            <button id="skipQuiz" class="btn btn-secondary close-quiz">Skip</button>
-            <button id="submitQuiz" class="btn btn-primary">Submit</button>
+            <div class="question">
+                <input class="form-control" type="text" placeholder="name" aria-label="name" id="nameInput">
+            </div>
+            <!-- <button id="skipQuiz" class="btn btn-secondary close-quiz">Skip</button> -->
+            <button id="submitQuiz" class="btn btn-primary" disabled>Submit</button>
             <button id="continueQuiz" style="display: none;" class="btn btn-primary">Continue</button>
         </div>
         <div id="tab2" class="tab">
@@ -190,9 +226,6 @@
                 <img id="sign-out" src="img/icons/sign-out.svg" alt="Sign Out" style="width: 25px; height: 25px;">
             </div>
         </header>
-
-        <link rel="stylesheet" href="src/style/chat.css">
-        <script src="src/js/chat.js"></script>
 
         <div class="chat-window open">
             <div class="chats">
@@ -229,9 +262,9 @@
                 
                 -->
             </div>
-
             <div class="chat-avatar">
-                <img class="hidden" src="img/favicon/android-chrome-512x512.png" alt="Profile photo">
+                <img class="hidden close" src="img/icons/chat-close.svg" alt="close chat">
+                <img class="hidden face" src="img/favicon/android-chrome-512x512.png" alt="Profile photo">
             </div>
         </div>
 
@@ -262,10 +295,10 @@
                         them know what they'd be getting into.
                     </p>
                     <p class="small">Here's a great
-                        <a
+                        <a target='_blank'
                             href="https://www.npr.org/sections/money/2024/02/13/1228749143/the-dating-app-paradox-why-dating-apps-may-be-worse-than-ever">NPR
                             article</a>
-                        going into more detail about it.
+                        going into more detail.
                     </p>
                 </div>
 
@@ -309,8 +342,8 @@
                             <div>
                                 <span class="mini name">mattghall</span>
                                 <span class="name">Matt Hall (he/him)</span>
-                                <span class="gray">888 followers</span>
-                                <span class="gray">630 posts</span>
+                                <span class="gray">892 followers</span>
+                                <span class="gray">631 posts</span>
                             </div>
                         </div>
                         <div class="instagram-grid d-none d-md-grid">
@@ -532,7 +565,7 @@
         <!-- Footer -->
         <div id="footer-row" class="row justify-content-center bg-dark text-white">
             <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-                datematt.com - <span class="version-span">1.3</span>
+                datematt.com - <span class="version-span">2.1</span>
             </div>
             <div class="social text-center col-12 px-1 px-md-2 pb-1">
                 <div>

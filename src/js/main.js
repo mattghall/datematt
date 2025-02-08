@@ -11,19 +11,23 @@ function importAll(r) {
 
 $(function () {
     feather.replace();
-      $("#main-version-span").text(mainJsVersion);
+    $("#main-version-span").text(mainJsVersion);
 
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-            navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(error) {
-                console.log('ServiceWorker registration failed: ', error);
+    if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
+        console.log("Localhost detected, skipping service worker registration.");
+    } else {
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('/service-worker.js').then(function (registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function (error) {
+                    console.log('ServiceWorker registration failed: ', error);
+                });
             });
-        });
+        }
     }
 
-    setTimeout(function() {
+    setTimeout(function () {
         feather.replace();
     }, 1500);
 

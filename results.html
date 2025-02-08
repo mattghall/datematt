@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .file-list li {
+            margin: 5px 0;
+        }
+
+        .file-content {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>File Management</h1>
+    <ul id="fileList" class="file-list"></ul>
+    <div id="fileContent" class="file-content"></div>
+
+    <script>
+        const apiUrl = 'https://your-api-gateway-url/default/games?route=dating';
+
+        async function fetchFiles() {
+            try {
+                const response = await fetch(apiUrl);
+                const files = await response.json();
+                displayFiles(files);
+            } catch (error) {
+                console.error('Error fetching files:', error);
+            }
+        }
+
+        function displayFiles(files) {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+
+            files.forEach(file => {
+                if (!file.endsWith('/')) { // Skip directories
+                    const listItem = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = '#';
+                    link.textContent = file;
+                    link.onclick = () => fetchFileContent(file);
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                }
+            });
+        }
+
+        async function fetchFileContent(file) {
+            const fileUrl = `https://your-api-gateway-url/default/games?file=${encodeURIComponent(file)}`;
+            try {
+                const response = await fetch(fileUrl);
+                const content = await response.json();
+                displayFileContent(content);
+            } catch (error) {
+                console.error('Error fetching file content:', error);
+            }
+        }
+
+        function displayFileContent(content) {
+            const fileContent = document.getElementById('fileContent');
+            fileContent.textContent = JSON.stringify(content, null, 2);
+        }
+
+        // Fetch and display the list of files on page load
+        fetchFiles();
+    </script>
+</body>
+
+</html>

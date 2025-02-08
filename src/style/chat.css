@@ -21,12 +21,30 @@
     }
 }
 
+.chat-avatar img.close {
+    position: absolute;
+    bottom: 55px;
+    right: 8px;
+    height: 20px;
+    width: 20px;
+    z-index: 1000;
+
+}
+
 .chat-window.open .chats {
     display: flex;
 }
 
 .chat-window.open .chat-avatar img {
     opacity: 1;
+}
+
+.chat-window .chat-avatar img.close {
+    opacity: 0;
+}
+
+.chat-window.open .chat-avatar img.close {
+    opacity: 0.8;
 }
 
 .chats {
@@ -131,8 +149,8 @@
 }
 
 .chat-avatar img.hidden {
-    height: 0px;
-    width: 0px;
+    height: 0px !important;
+    width: 0px !important;
     margin: 25px;
 }
 
