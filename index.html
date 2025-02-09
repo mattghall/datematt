@@ -40,119 +40,7 @@
     <script src="dist/js/chat.js"></script>
 
     <script>
-        $(document).ready(function () {
-            // Get local storage
-            if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
-                console.log("Running locally");
-            }
-            let siteVisit = localStorage.getItem("quizStats");
-            if (siteVisit) {
-                quizStats = JSON.parse(siteVisit);
-                quizStats['visits'] = Number(quizStats['visits']) + 1;
-                if (location.hostname == '' || location.hostname.includes("local") || location.hostname.includes("file")) {
-                    quizStats['testing'] = true;
-                }
-                if (quizStats["signOut"] === false) {
-                    welcomeBack();
-                } else {
-                    console.log("Repeat user who signed out");
-                }
-                if (!quizStats['id']) {
-                    quizStats['id'] = crypto.randomUUID();
-                    localStorage.setItem("quizStats", JSON.stringify(quizStats));
-                }
-            } else {
-                initQuizStats();
-            }
-            $("#submitQuiz").click(function () {
-                submitQuiz();
-            });
-            $("#skipQuiz").click(function () {
-                passFailQuiz(true);
-            });
-            $("#continueQuiz").click(function () {
-                passQuiz();
-            });
-            $("#sign-out").click(function () {
-                signOut();
-            });
-            $("input[type=range]").on("input change", function (e) {
-                sliderChange(e.target.id, e.target.value);
-            });
-            $("input[type=range]").on("change", function (e) {
-                quizStats['path'][e.target.id][new Date().toISOString()] = e.target.value;
-            });
-            $('#load-more-movies').click(loadMovies);
-            $('.fold-me').click(function (e) {
-                foldFunction(e);
-            });
-            $('.hobby-cards').on('click', '.next, .last', cardNavClick);
-            $('.hobby-cards').on('click', '.expand, .shrink', expandHobbyImg);
 
-            $('.chat-avatar').click(function () {
-                toggleChat();
-            });
-
-            function toggleChat(forceClose = false) {
-                if (forceClose || $('.chat-window').hasClass('open')) {
-                    postData();
-                    $(".chat-bubble button").prop("disabled", true);
-                    $(".chat-bubble button").css("background-color", "gray");
-                    $(".chat-entry, .chat-bubble").css("opacity", 0.8)
-                } else {
-                    startChatTree();
-                }
-                $('.chat-window').toggleClass('open');
-            }
-
-            var namePath = [];
-
-            $("#nameInput").on("focusout", function () {
-                quizStats[NAME] = $("#nameInput").val();
-                if (!quizStats['path'].hasOwnProperty(NAME)) {
-                    quizStats['path'][NAME] = [];
-                }
-                namePath.push($("#nameInput").val());
-                quizStats['path'][NAME] = namePath;
-            });
-
-            let el = document.getElementById('nameInput');
-            var lastKeyBack = false;
-            el.addEventListener('keydown', function (event) {
-                // Checking for Backspace. 
-                // 8 = backspace, 46 = delete, 13 = enter, 9 = tab, 189 = minus
-                if (event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 13 || event.keyCode == 9 || event.keyCode == 189) {
-                    if (lastKeyBack == false && $("#nameInput").val() != "") {
-                        namePath.push($("#nameInput").val());
-                    }
-                    lastKeyBack = true;
-                }
-            });
-
-            initResultMap()
-            loadMovies();
-            buildHobbyCards();
-            setTimeout(() => loadMovies(), 1000);
-            setTimeout(() => loadMovies(), 2000);
-
-        });
-
-        function foldFunction(e) {
-            var targetClass = "";
-            var classList = [];
-            if (e.target.tagName == "svg") {
-                classList = e.target.parentElement.classList;
-            } else {
-                classList = e.target.classList;
-            }
-            if (classList.contains('why')) {
-                targetClass = 'why';
-                $('#whyCollapse').toggleClass('collapsed');
-            } else if (classList.contains('instagram')) {
-                targetClass = 'instagram';
-                $('.instagram-grid').toggleClass('d-none');
-            }
-        }
     </script>
 </head>
 
@@ -229,38 +117,6 @@
 
         <div class="chat-window open">
             <div class="chats">
-                <!-- 
-                <div class="chat-entry prompt">
-                    <div class="chat-bubble d-flex align-items-center">
-                        <p class="mb-0">Like what you see?</p>
-                    </div>
-                </div>
-                <div class="chat-entry response">
-                    <div class="chat-bubble d-flex align-items-center justify-content-between">
-                        <button class="btn btn-primary mx-1">Yes</button>
-                        <button class="btn btn-danger mx-1">No</button>
-                    </div>
-                </div>
-
-                <div class="chat-entry response">
-                    <div class="chat-bubble d-flex align-items-center">
-                        <p class="mb-0">Yes</p>
-                    </div>
-                </div> 
-                <div class="chat-entry prompt pic">
-                    <div class="chat-bubble pic">
-                        <img src="img/instagram/insta-01.jpg" alt="Profile photo">
-                    </div>
-                </div>
-                
-                <div class="chat-entry response">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="name" aria-label="name">
-                        <button class="btn btn-primary" type="button">✓</button>
-                    </div>
-                </div>
-                
-                -->
             </div>
             <div class="chat-avatar">
                 <img class="hidden close" src="img/icons/chat-close.svg" alt="close chat">
@@ -314,11 +170,9 @@
                         hiked over
                         600
                         miles on the <a href="https://trailmatt.com" target="_blank"></a>PCT</a>,
-                        and love spending time outdoors. When I’m not running or hiking, I enjoy playing volleyball, pub
-                        trivia,
-                        drinking great coffee,
-                        and planning my next adventure. I also dabble in web design with my spare time creating various
-                        games, web apps, and <sup>*cough*</sup> whatever this is.
+                        and love spending time outdoors. When I’m not running or hiking, I enjoy playing volleyball,
+                        drinking great coffee, pub trivia, and planning my next adventure. I also dabble in web design
+                        with my spare time creating various games, web apps, and <sup>*cough*</sup> whatever this is.
                     </p>
                 </div>
 
@@ -384,7 +238,7 @@
                 </div>
             </div>
         </div>
-        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center background-2">
             <div class="row">
                 <!-- Hobbies -->
                 <div class="col-12 my-2 hobby-cards">
@@ -561,11 +415,59 @@
                 </div>
             </div>
         </div>
+        <div class="container-fluid">
+            <div class="row">
+
+                <div class="col-12 my-2">
+                    <div id="contactMe">
+                        <h2 class="mb-4">Connect</h2>
+                        <div class="collapse show" id="collapsableFields">
+
+                            <div class="row mb-4">
+                                <div data-mdb-input-init class="form-outline">
+                                    <input type="text" id="contactFormName" class="form-control" placeholder="name" />
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">@</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="instagram"
+                                    id="contactFormInstagram" aria-label="instagram" aria-describedby="basic-addon1">
+                            </div>
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="email" id="contactFormEmail" class="form-control" placeholder="email" />
+                            </div>
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="phone" id="contactFormPhone" class="form-control" placeholder="phone #" />
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <textarea id="contactFormMessage" class="form-control" placeholder="message"></textarea>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <button type="button" id="contactFormSubmit"
+                                    class="btn btn-primary btn-block px-5">Submit</button>
+                            </div>
+                        </div>
+                        <div id="contactFormThanks" style="display: none;" class="form-outline mb-4">
+                            <span>Thanks for connecting!
+                                I'll get back to you soon.</span>
+                            <br />
+                            <button id="contactFormUpdate" type="button" class="btn btn-dark my-3">Update
+                                Info</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Footer -->
         <div id="footer-row" class="row justify-content-center bg-dark text-white">
             <div class="col-12 text-center px-1 px-md-2 pt-1" id="footer-title">
-                datematt.com - <span class="version-span">2.1</span>
+                datematt.com - <span class="version-span">2.2</span>
             </div>
             <div class="social text-center col-12 px-1 px-md-2 pb-1">
                 <div>

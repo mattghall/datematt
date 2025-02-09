@@ -9,6 +9,7 @@ function initQuizStats() {
     quizStats['visits'] = 1;
     quizStats['signOut'] = true;
     quizStats['final'] = {};
+    quizStats['contact'] = { "submitted": false };
     quizStats['path'] = {
         'natureSlider': {},
         'sportsSlider': {},
@@ -51,6 +52,8 @@ function welcomeBack() {
     $("#tab1 h2").css("transition", "none");
     if (quizStats[NAME]) {
         $("#tab1 h2").text("Welcome Back " + quizStats[NAME] + "!");
+        $("#contactFormName").val(quizStats[NAME]);
+        $("#contactFormName").addClass("is-valid");
     } else if (quizStats['overall']) {
         $("#tab1 h2").text("Welcome Back! " + quizStats['overall'] + "% Match");
     } else {
@@ -99,8 +102,13 @@ function passQuiz() {
     setTimeout(() => {
         $("#quiz").remove();
         setTimeout(() => {
-            initChat();
+            if (quizStats['visits'] > 1) {
+                initChat(true);
+            } else {
+                initChat(false);
+            }
         }, 5000);
+
     }, 2000);
 }
 
@@ -136,6 +144,10 @@ function postData() {
     }).then(res => {
         console.log("Status Code: ", res.status);
         localStorage.setItem("quizStats", JSON.stringify(quizStats));
+        if ($("#contactFormSubmit").prop("disabled") == true) {
+            $("#collapsableFields").removeClass("show");
+            $("#contactFormThanks").show();
+        }
         return res.json();
     });
 }
@@ -245,6 +257,8 @@ const sliders = ["nature", "sports", "pets1", "pets2", "spiritual", "politics"];
 
 function submitQuiz() {
     $("#submitQuiz").attr("disabled", "true");
+    $("#nameInput").attr("disabled", "true");
+    $("#contactFormName").val($("#nameInput").val());
     $("input[type='range']").attr("disabled");
     $("#tab1 h2").text("Results")
     var sliderTitles = ["Nature", "Sports", "Pets", "Cats", "Religion", "Politics"];

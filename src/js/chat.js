@@ -1,7 +1,7 @@
 var chatTranscript = [];
 var chatTranscriptCodes = [];
 
-function initChat() {
+function initChat(startChat = true) {
     $(".chat-window").css("display", "flex");
     chatTranscript = ["start"];
     if (!quizStats['path']['chat']) {
@@ -11,13 +11,18 @@ function initChat() {
     setTimeout(() => {
         $('.chat-avatar img.face').removeClass('hidden');
         setTimeout(() => {
-            $('.chat-avatar img.close').removeClass('hidden');
-            startChatTree();
+            if (!quizStats.hasOwnProperty("contact") || quizStats['contact']['submitted'] != true) {
+                $(".chat-avatar img.face").css("animation", "3s ease 5s infinite normal none running glow");
+            }
         }, 1000);
     }, 1000);
 }
 
+var chatTreeStarted = false;
 function startChatTree() {
+    chatTreeStarted = true;
+    $(".chat-avatar img.face").css("animation", "none")
+    $('.chat-avatar img.close').removeClass('hidden');
     var msg = "Hi";
     if (quizStats['name']) {
         msg += " " + quizStats['name'];
@@ -95,6 +100,7 @@ function askInputQuestion(key, question, placeholder) {
 }
 
 function reachOutSoon() {
+    quizStats['contact']['submitted'] = true;
     postData();
     delayedChat('I\'ll be sure to reach out soon!', 'prompt');
     setTimeout(() => {

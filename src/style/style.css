@@ -403,3 +403,22 @@ input[type="range"]::-moz-range-progress {
 input[type="range"]::-ms-fill-lower {
     background-color: #43e5f7;
 }
+
+#contactMe {
+    max-width: 600px;
+    margin: auto;
+    background-color: #dceafd;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 5px 1px 10px black;
+}
+
+.input-group-prepend .input-group-text {
+    border-end-end-radius: 0px !important;
+    border-start-end-radius: 0px !important;
+    ;
+}
+
+#contactFormThanks {
+    color: green;
+}
