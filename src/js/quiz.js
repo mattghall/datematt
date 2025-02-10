@@ -59,6 +59,24 @@ function welcomeBack() {
     } else {
         $("#tab1 h2").text("Welcome Back!");
     }
+    if (quizStats['contact']) {
+        if (quizStats['contact']['instagram'] && quizStats['contact']['instagram'] != "") {
+            $("#contactFormInstagram").val(quizStats['contact']['instagram']);
+            $("#contactFormInstagram").addClass("is-valid");
+        } else {
+            $("#oopsField").show();
+        }
+        if (quizStats['contact']['email'] && quizStats['contact']['email'] != "") {
+            $("#contactFormEmail").val(quizStats['contact']['email']);
+            $("#contactFormEmail").addClass("is-valid");
+        }
+        if (quizStats['contact']['phone'] && quizStats['contact']['phone'] != "") {
+            $("#contactFormPhone").val(quizStats['contact']['phone']);
+            $("#contactFormPhone").addClass("is-valid");
+        } 
+
+    }
+
     if (!quizStats['path']['chat']) {
         quizStats['path']['chat'] = [];
     }

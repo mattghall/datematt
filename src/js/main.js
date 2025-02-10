@@ -192,6 +192,7 @@ function submitContactForm() {
     let name = $("#contactFormName").val();
     let email = $("#contactFormEmail").val();
     let phone = $("#contactFormPhone").val();
+    let insta = $("#contactFormInstagram").val();
     let message = $("#contactFormMessage").val();
     var count = 0;
     if (name && name != "") {
@@ -203,6 +204,11 @@ function submitContactForm() {
     }
     if (email && email != "") {
         quizStats['contact']['email'] = email;
+        count++;
+
+    }
+    if (insta && insta != "") {
+        quizStats['contact']['instagram'] = insta;
         count++;
 
     }

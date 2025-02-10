@@ -29,6 +29,13 @@ header {
     align-items: center;
 }
 
+#oopsField {
+    display: none;
+    color: red;
+    font-size: small;
+}
+
+
 .tab input[type=range] {
     width: 100%;
 }
